@@ -67,7 +67,7 @@ export default function Login() {
   return (
     <LayoutCenter>
       <div className="text-3xl text-white font-second">
-        <div className="relative mx-auto block w-[26rem] rounded-xl border-2 border-zinc-700 p-10 shadow-lg backdrop-blur-md bg-transparent">
+        <div className="relative mx-auto block w-[26rem] rounded-xl border-2 border-zinc-800 p-10 shadow-lg backdrop-blur-md bg-transparent">
           <form onSubmit={handleLogin} className="grid grid-cols-1 gap-4">
             <div className="text-center pb-4 text-white">
               <div className="flex items-center justify-center text-neutral-22 flex-row gap-1">

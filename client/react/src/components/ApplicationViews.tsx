@@ -20,7 +20,10 @@ export default function ApplicationViews() {
       <Route
         element={
           <>
-            <main style={{ background: "url('./tile_primary.png')" }}>
+            <main
+              className="bg-primary-1"
+              // style={{ background: "url('./tile_20pc.png')" }}
+            >
               <div className="flex min-h-screen flex-col">
                 <Navbar />
                 <Outlet />
@@ -51,10 +54,9 @@ export default function ApplicationViews() {
           path={ROUTE_HOW_TO_PLAY}
           element={<span>HOW TO PLAY/HELP</span>}
         />
-
-        <Route path={ROUTE_LOGIN} element={<Login />} />
-        <Route path={ROUTE_REGISTER} element={<Register />} />
       </Route>
+      <Route path={ROUTE_LOGIN} element={<Login />} />
+      <Route path={ROUTE_REGISTER} element={<Register />} />
     </Routes>
   );
 }

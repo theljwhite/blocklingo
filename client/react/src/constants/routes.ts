@@ -9,5 +9,6 @@ export const ROUTE_REGISTER = "/register";
 export const ROUTE_PROFILE = (id: number) => `/profile/${id}`;
 
 export const ROUTE_PRIVACY_POLICY = "/privacy";
+export const ROUTE_TOS = "/tos";
 
 export const EXTERNAL_ROUTE_ERC20_TOKEN = "/TODO";

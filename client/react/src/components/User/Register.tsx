@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../managers/auth/useSession";
 import { api } from "../../managers/api";
 import { UserTypeValue } from "../../managers/user-profile-manager";
-import { ROUTE_LOGIN } from "../../constants/routes";
+import {
+  ROUTE_LOGIN,
+  ROUTE_PRIVACY_POLICY,
+  ROUTE_TOS,
+} from "../../constants/routes";
 import { REGEX_EMAIL_ADDRESS } from "../../constants/regex";
 import LayoutCenter from "../UI/Layouts/LayoutCenter";
 import StyledInput from "../UI/StyledInput";
@@ -17,7 +21,7 @@ import {
 import { toastError, toastSuccess } from "../UI/Toast/Toast";
 
 //TODO - avatar, etc at some point.
-//TODO - add actual validation and validation UI to this flow at some point.
+//TODO - add actual in depth validation and validation UI to this flow at some point.
 
 type RegisterUser = {
   username: string;
@@ -81,22 +85,28 @@ export default function Register() {
   };
 
   const validate = (): void => {
-    if (user.username.length < 4) toastError("Username must be 3+ characters.");
+    let message = "";
+
+    if (user.username.length < 4) {
+      message = "Username must be 3+ characters.";
+    }
     if (!REGEX_EMAIL_ADDRESS.test(user.email)) {
-      toastError("Please enter a valid email.");
+      message = "Please enter a valid email.";
     }
     if (user.password.length < 3 || user.passwordConfirm.length < 3) {
-      toastError("Password must be at least 3 characters.");
+      message = "Password must be at least 3 characters.";
     }
     if (user.password.toLowerCase() !== user.passwordConfirm.toLowerCase()) {
-      toastError("Passwords do not match.");
+      message = "Passwords do not match";
     }
+
+    if (message) toastError(message);
   };
 
   return (
     <LayoutCenter>
       <div className="text-3xl text-white font-second">
-        <div className="relative mx-auto block w-[32rem] rounded-xl border-2 border-zinc-700 py-6 px-4 shadow-lg backdrop-blur-md bg-transparent">
+        <div className="relative mx-auto block w-[32rem] rounded-xl border-2 border-zinc-800 py-6 px-4 shadow-lg backdrop-blur-md bg-transparent">
           <form
             onSubmit={handleRegister}
             className="grid grid-cols-1 gap-4 px-6"
@@ -211,8 +221,17 @@ export default function Register() {
               </div>
             </div>
             <span className="text-zinc-400 my-2 text-xs text-center">
-              By creating an account, you are accepting our terms of service and
-              privacy policy.
+              By creating an account, you are accepting our{" "}
+              <Link to={ROUTE_TOS} className="underline hover:text-neutral-22">
+                terms of service
+              </Link>{" "}
+              and{" "}
+              <Link
+                to={ROUTE_PRIVACY_POLICY}
+                className="underline hover:text-neutral-22"
+              >
+                privacy policy.
+              </Link>
             </span>
             <div className="flex flex-row text-sm my-2 gap-2">
               <button

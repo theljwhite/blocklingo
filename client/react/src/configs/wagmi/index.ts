@@ -36,7 +36,10 @@ const connectors = connectorsForWallets(
       ],
     },
   ],
-  { appName: "TODO", projectId: import.meta.env.VITE_WC_PROJECT_ID }
+  {
+    appName: import.meta.env.VITE_PROJECT_NAME,
+    projectId: import.meta.env.VITE_WC_PROJECT_ID,
+  }
 );
 
 export const wagmiConfig = createConfig({
