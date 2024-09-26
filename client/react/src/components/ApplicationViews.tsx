@@ -12,7 +12,7 @@ import Navbar from "./UI/Navbar";
 import Hero from "./UI/Hero";
 import Login from "./User/Login";
 import Register from "./User/Register";
-import Play from "./Play/Play";
+import GameContainer from "./Game/GameContainer";
 
 export default function ApplicationViews() {
   return (
@@ -37,7 +37,7 @@ export default function ApplicationViews() {
           path={ROUTE_PLAY}
           element={
             <Authorized>
-              <Play />
+              <GameContainer />
             </Authorized>
           }
         />
