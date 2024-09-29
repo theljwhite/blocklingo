@@ -249,11 +249,7 @@ export default function Sidebar({
           <div className="flex flex-row items-center gap-2 justify-evenly mt-2 flex-nowrap p-2">
             <StyledSquareButton
               type="button"
-              text={
-                isConnected && address
-                  ? `Wallet: ${shortenEthereumAddress(address, 4, 4)}`
-                  : "Connect"
-              }
+              text={isConnected && address ? "hello" : "Connect"}
               onClick={closeSidebarOpenCryptoModal}
               disabled={false}
               bgClass="bg-black"

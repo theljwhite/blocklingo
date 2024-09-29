@@ -1,3 +1,4 @@
+import { useGameStore } from "../../game/store";
 import {
   ShuffleIcon,
   SoundIcon,
@@ -7,6 +8,8 @@ import {
 import LightModeSwitch from "../UI/LightModeSwitch";
 
 export default function GameToolbar() {
+  const { isLightMode, setIsLightMode } = useGameStore((state) => state);
+
   return (
     <div className="border-y border-neutral-21 text-neutral-22">
       <div className="mx-auto px-6 max-w-screen-xl ">
@@ -43,8 +46,8 @@ export default function GameToolbar() {
                   className="border-none flex items-center justify-center h-full flex px-2.5 text-neutral-22 bg-almostblack items-center text-lg"
                 >
                   <LightModeSwitch
-                    checked={false}
-                    onChange={() => console.log("TODO")}
+                    checked={isLightMode}
+                    onChange={() => setIsLightMode(!isLightMode)}
                   />
                 </button>
               </div>
