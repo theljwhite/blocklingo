@@ -11,7 +11,7 @@ export default function GameToolbar() {
   const { isLightMode, setIsLightMode } = useGameStore((state) => state);
 
   return (
-    <div className="border-y border-neutral-21 text-neutral-22">
+    <div className="border-y border-neutral-21 bg-almostblack text-neutral-22">
       <div className="mx-auto px-6 max-w-screen-xl ">
         <div className="grow shrink m-3 flex flex-nowrap justify-between">
           <header className="w-full block">
