@@ -19,7 +19,7 @@ export type ConnectionItem = {
 
 export type StepDifficultyMap = Map<
   number,
-  { wordLimit: number; wordStrength: number }
+  { wordLimit: number; wordStrength: number; mistakes: number }
 >;
 
 export type CorrectGuess = {
@@ -63,8 +63,8 @@ export interface GameState {
 
 export const useGameStore = create<GameState>((set, get) => {
   const initialStepDifficulties: StepDifficultyMap = new Map([
-    [0, { wordLimit: 5, wordStrength: 999 }],
-    [1, { wordLimit: 5, wordStrength: 999 }],
+    [0, { wordLimit: 5, wordStrength: 999, mistakes: 4 }],
+    [1, { wordLimit: 5, wordStrength: 999, mistakes: 4 }],
   ]);
 
   const initialGameState = {

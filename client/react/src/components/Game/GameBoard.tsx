@@ -12,23 +12,23 @@ export default function GameBoard() {
   const {
     connectionBoard,
     correctGuesses,
+    userConnectionGuesses,
     userIncorrectGuesses,
     stepDifficulties,
   } = useGameStore((state) => state);
-  const { guess } = useGuessConnection();
+  const { shuffle, select, deselectAll, guess } = useGuessConnection();
   const { createConnectionsBoard } = useCreateConnection();
+
+  const stepDifficulty = stepDifficulties.get(0); //step - hardcoded for now
+  const mistakes = [0, 0, 0, 0];
 
   const tailwindTheme = resolveConfig(tailwindConfig).theme;
 
-  const TEMP_M = ["lol", "lol", "lol", "lol"];
-
   useEffect(() => {
-    // createConnections();
+    createConnections();
   }, []);
 
   const createConnections = async (): Promise<any> => {
-    const step = 0; //TODO this is hardcoded for now
-    const stepDifficulty = stepDifficulties.get(step);
     const used = new Set<number>();
     await createConnectionsBoard(used, stepDifficulty?.wordLimit ?? 5);
   };
@@ -93,10 +93,14 @@ export default function GameBoard() {
                     key={index}
                     className={`${
                       item.selected ? "bg-zinc-800" : "bg-almostblack"
-                    } min-w-[0px] overflow-hidden flex justify-center items-center flex-wrap rounded-xl relative cursor-pointer font-bold uppercase border-4 border-primary-1 text-neutral-22`}
+                    } ${
+                      userConnectionGuesses.length < 4 || item.selected
+                        ? "cursor-pointer"
+                        : "cursor-default"
+                    } min-w-[0px] overflow-hidden flex justify-center items-center flex-wrap rounded-xl relative font-bold uppercase border-4 border-primary-1 text-neutral-22`}
                   >
                     <input
-                      onClick={() => guess(item.word)}
+                      onClick={() => select(item.word)}
                       className="hidden"
                     />
                     {item.word}
@@ -112,7 +116,7 @@ export default function GameBoard() {
           <p className="flex items-center gap-2 text-neutral-22">
             Mistakes remaining:
             <span className="flex gap-2.5 min-w-[120px]">
-              {TEMP_M.map((item, index) => {
+              {mistakes.map((item, index) => {
                 return (
                   <span
                     key={index}
@@ -128,7 +132,7 @@ export default function GameBoard() {
         <GameBoardButton
           type="button"
           text="Shuffle"
-          onClick={() => console.log("C")}
+          onClick={shuffle}
           disabled={false}
           bgClass="bg-almostblack"
           textColorClass="text-neutral-22"
@@ -137,8 +141,8 @@ export default function GameBoard() {
         <GameBoardButton
           type="button"
           text="Deselect all"
-          onClick={() => console.log("C")}
-          disabled={true}
+          onClick={deselectAll}
+          disabled={userConnectionGuesses.length === 0}
           bgClass="bg-almostblack"
           textColorClass="text-neutral-22"
           borderColorClass="border-neutral-22"
@@ -146,8 +150,8 @@ export default function GameBoard() {
         <GameBoardButton
           type="button"
           text="Submit"
-          onClick={() => console.log("C")}
-          disabled={true}
+          onClick={guess}
+          disabled={userConnectionGuesses.length < 4}
           bgClass="bg-almostblack"
           textColorClass="text-primary-1"
           borderColorClass="border-primary-1"
