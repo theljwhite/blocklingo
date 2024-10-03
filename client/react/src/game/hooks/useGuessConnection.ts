@@ -1,23 +1,25 @@
 import { useGameStore } from "../store";
-import { toastSuccess } from "../../components/UI/Toast/Toast";
+import { useGameAudio } from "../store/AudioContext";
 
-//TODO - guess func can probably be cleaned up some
-
-export function useGuessConnection() {
+export default function useGuessConnection() {
   const {
     connectionBoard,
     connectionGroup,
     connectionGuessGroup,
     userConnectionGuesses,
     correctGuesses,
+    mistakes,
     setUserIncorrectGuesses,
     setCorrectGuesses,
     setConnectionBoard,
     setUserConnectionGuesses,
     setConnectionGroup,
+    setMistakes,
   } = useGameStore((state) => state);
+  const { play: playSound } = useGameAudio();
 
   const shuffle = (): void => {
+    playSound("shuffle");
     const newOrder = connectionBoard.sort(() => Math.random() - 0.5);
     setConnectionBoard(newOrder);
   };
@@ -26,6 +28,7 @@ export function useGuessConnection() {
     const isAlreadySelected = userConnectionGuesses.includes(userSelection);
 
     if (isAlreadySelected) {
+      playSound("unselect");
       const updatedGuesses = userConnectionGuesses.filter(
         (word) => word !== userSelection
       );
@@ -39,6 +42,7 @@ export function useGuessConnection() {
     }
 
     if (userConnectionGuesses.length < 4) {
+      playSound("select");
       const updatedGuesses = [...userConnectionGuesses, userSelection];
       const updatedBoard = connectionBoard.map((item) =>
         item.word === userSelection ? { ...item, selected: true } : item
@@ -50,6 +54,7 @@ export function useGuessConnection() {
   };
 
   const deselectAll = (): void => {
+    playSound("deselect");
     const updatedBoard = connectionBoard.map((item) => ({
       ...item,
       selected: false,
@@ -64,34 +69,45 @@ export function useGuessConnection() {
         connectionGuessGroup[groupWord].includes(word)
       )
     );
-
     if (correctGroup) {
-      toastSuccess(`Correct! You've found the ${correctGroup} group.`);
+      playSound("success");
 
       const newGuessItem = {
         connectionGroupName: correctGroup,
         userConnectionGuesses: userConnectionGuesses,
       };
-      const updatedCorrectGuesses = [...correctGuesses, newGuessItem];
 
-      setCorrectGuesses(updatedCorrectGuesses);
-
-      const remainingGroups = connectionGroup.filter(
-        (groupWord) => groupWord !== correctGroup
+      const updatedBoard = connectionBoard.map((item) =>
+        userConnectionGuesses.includes(item.word)
+          ? { ...item, isAnimating: true }
+          : item
       );
 
-      const resetBoard = connectionBoard.filter(
-        (item) => !userConnectionGuesses.includes(item.word)
-      );
+      setConnectionBoard(updatedBoard);
 
-      setConnectionBoard(resetBoard);
-      setConnectionGroup(remainingGroups);
-      setUserConnectionGuesses([]);
+      setTimeout(() => {
+        const updatedCorrectGuesses = [...correctGuesses, newGuessItem];
+
+        setCorrectGuesses(updatedCorrectGuesses);
+
+        const remainingGroups = connectionGroup.filter(
+          (groupWord) => groupWord !== correctGroup
+        );
+
+        const resetBoard = connectionBoard.filter(
+          (item) => !userConnectionGuesses.includes(item.word)
+        );
+
+        setConnectionBoard(resetBoard);
+        setConnectionGroup(remainingGroups);
+        setUserConnectionGuesses([]);
+      }, 2000);
     } else {
+      playSound("error_short");
       setUserIncorrectGuesses(userConnectionGuesses);
-      // toastError("Incorrect guess. Try again.", true);
-
       setUserConnectionGuesses([]);
+
+      if (mistakes > 0) setMistakes(mistakes - 1);
 
       setTimeout(() => {
         setUserIncorrectGuesses([]);

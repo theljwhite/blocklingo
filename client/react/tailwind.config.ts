@@ -67,6 +67,16 @@ export default {
           2: "#FFFAEB",
           3: "#FEC84B",
         },
+        game: {
+          list: {
+            1: "#bbf7d0",
+            2: "#fed7aa",
+            3: "#bae6fd",
+            4: "#e9d5ff",
+            5: "#fbcfe8",
+            6: "#99f6e4",
+          },
+        },
       },
     },
   },

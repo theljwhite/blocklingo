@@ -3,7 +3,7 @@ import { triggerWords } from "../data/words/connections";
 import { getTriggerWordsFromQuery } from "../logic/similar-words";
 import { toastError } from "../../components/UI/Toast/Toast";
 
-export function useCreateConnection() {
+export default function useCreateConnection() {
   const {
     setIsLoading,
     setIsSuccess,
@@ -61,6 +61,7 @@ export function useCreateConnection() {
       setConnectionGroup(selectedWords);
       setConnectionGuessGroup(connectionGuessGroup);
 
+      setIsLoading(false);
       setIsSuccess(true);
     } catch (error) {
       setError(0, { step: 0, message: "Failed to create connecitons board" });

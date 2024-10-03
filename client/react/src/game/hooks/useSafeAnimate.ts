@@ -5,11 +5,9 @@ export default function useSafeAnimate() {
 
   const safeAnimate = (...args: Parameters<typeof animate>) => {
     if (!scope) {
-      console.log("NO SCOPE AT ALL");
       return;
     }
     if (!scope.current) {
-      console.log("NO SCOPE CURRENT");
       return;
     }
     return animate(...args);

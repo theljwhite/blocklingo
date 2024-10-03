@@ -36,3 +36,213 @@ export const LoadingSpinner = ({
     <span className="sr-only">Loading...</span>
   </div>
 );
+
+export const GameLoadingSpinner = ({ size }: { size: number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="xMidYMid"
+    width={size}
+    height={size}
+    shapeRendering="auto"
+    display="block"
+    style={{ background: "transparent" }}
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <g>
+      <rect fill="#fad1a4" height="27" width="27" y="6.5" x="6.5">
+        <animate
+          calcMode="discrete"
+          begin="0s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <rect fill="#fad1a4" height="27" width="27" y="6.5" x="36.5">
+        <animate
+          calcMode="discrete"
+          begin="0.125s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <rect fill="#fad1a4" height="27" width="27" y="6.5" x="66.5">
+        <animate
+          calcMode="discrete"
+          begin="0.25s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <rect fill="#fad1a4" height="27" width="27" y="36.5" x="6.5">
+        <animate
+          calcMode="discrete"
+          begin="0.875s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <rect fill="#fad1a4" height="27" width="27" y="36.5" x="66.5">
+        <animate
+          calcMode="discrete"
+          begin="0.375s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <rect fill="#fad1a4" height="27" width="27" y="66.5" x="6.5">
+        <animate
+          calcMode="discrete"
+          begin="0.75s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <rect fill="#fad1a4" height="27" width="27" y="66.5" x="36.5">
+        <animate
+          calcMode="discrete"
+          begin="0.625s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <rect fill="#fad1a4" height="27" width="27" y="66.5" x="66.5">
+        <animate
+          calcMode="discrete"
+          begin="0.5s"
+          repeatCount="indefinite"
+          dur="1s"
+          keyTimes="0;0.125;1"
+          values="#d1a4fa;#fad1a4;#fad1a4"
+          attributeName="fill"
+        ></animate>
+      </rect>
+      <g></g>
+    </g>
+  </svg>
+);
+
+export const GameLoadingCircles = ({
+  size,
+  color,
+}: SpinnerProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 105 105"
+    xmlns="http://www.w3.org/2000/svg"
+    fill={color ?? "currentColor"}
+  >
+    <circle cx="12.5" cy="12.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="0s"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="12.5" cy="52.5" r="12.5" fillOpacity=".5">
+      <animate
+        attributeName="fill-opacity"
+        begin="100ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="52.5" cy="12.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="300ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="52.5" cy="52.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="600ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="92.5" cy="12.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="800ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="92.5" cy="52.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="400ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="12.5" cy="92.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="700ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="52.5" cy="92.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="500ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle cx="92.5" cy="92.5" r="12.5">
+      <animate
+        attributeName="fill-opacity"
+        begin="200ms"
+        dur="1s"
+        values="1;.2;1"
+        calcMode="linear"
+        repeatCount="indefinite"
+      />
+    </circle>
+  </svg>
+);

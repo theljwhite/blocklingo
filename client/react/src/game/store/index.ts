@@ -1,12 +1,5 @@
 import { create } from "zustand";
 
-export enum Difficulty {
-  Easy = 1,
-  Medium = 2,
-  Hard = 3,
-  Genius = 4,
-}
-
 export type GameError = {
   step: number;
   message: string;
@@ -15,12 +8,17 @@ export type GameError = {
 export type ConnectionItem = {
   word: string;
   selected: boolean;
+  isAnimating?: boolean;
 };
 
-export type StepDifficultyMap = Map<
-  number,
-  { wordLimit: number; wordStrength: number; mistakes: number }
->;
+export type Difficulty = "Easy" | "Medium" | "Hard";
+export type DifficultySettings = {
+  wordLimit: number;
+  wordStrength: number;
+  mistakes: number;
+};
+export type StepSettings = Record<number, DifficultySettings>;
+export type StepDifficulties = Record<Difficulty, StepSettings>;
 
 export type CorrectGuess = {
   connectionGroupName: string;
@@ -41,14 +39,16 @@ export interface GameState {
   userConnectionGuesses: string[];
   userIncorrectGuesses: string[];
   correctGuesses: CorrectGuess[];
+  mistakes: number;
   didWin: boolean;
-  stepDifficulties: StepDifficultyMap;
+  isSoundOn: boolean;
   setIsLoading: (isLoading: boolean) => void;
   setIsSuccess: (isSuccess: boolean) => void;
   setError: (step: number, error: GameError) => void;
   setStep: (step: number) => void;
   setFurthestStep: (furthestStep: number) => void;
   setIsLightMode: (isLightMode: boolean) => void;
+  setMistakes: (connectionMistakes: number) => void;
   setDidWin: (didWin: boolean) => void;
   setConnectionBoard: (board: ConnectionItem[]) => void;
   setConnectionGroup: (group: string[]) => void;
@@ -57,16 +57,26 @@ export interface GameState {
   setUserConnectionGuesses: (guesses: string[]) => void;
   setUserIncorrectGuesses: (guesses: string[]) => void;
   setCorrectGuesses: (correctGuesses: CorrectGuess[]) => void;
-  setStepDifficulties: (stepDifficulties: StepDifficultyMap) => void;
+  setIsSoundOn: (isSoundOn: boolean) => void;
   reset: () => void;
 }
 
-export const useGameStore = create<GameState>((set, get) => {
-  const initialStepDifficulties: StepDifficultyMap = new Map([
-    [0, { wordLimit: 5, wordStrength: 999, mistakes: 4 }],
-    [1, { wordLimit: 5, wordStrength: 999, mistakes: 4 }],
-  ]);
+export const STEP_DIFFICULTIES: StepDifficulties = {
+  Easy: {
+    0: { wordLimit: 5, wordStrength: 999, mistakes: 6 },
+    1: { wordLimit: 5, wordStrength: 999, mistakes: 6 },
+  },
+  Medium: {
+    0: { wordLimit: 5, wordStrength: 999, mistakes: 4 },
+    1: { wordLimit: 5, wordStrength: 999, mistakes: 4 },
+  },
+  Hard: {
+    0: { wordLimit: 5, wordStrength: 999, mistakes: 2 },
+    1: { wordLimit: 5, wordStrength: 999, mistakes: 2 },
+  },
+};
 
+export const useGameStore = create<GameState>((set, get) => {
   const initialGameState = {
     isLoading: false,
     isSuccess: false,
@@ -80,9 +90,10 @@ export const useGameStore = create<GameState>((set, get) => {
     userConnectionGuesses: [],
     userIncorrectGuesses: [],
     correctGuesses: [],
-    stepDifficulties: initialStepDifficulties,
-    difficulty: Difficulty.Medium,
+    difficulty: "Medium" as Difficulty,
+    mistakes: STEP_DIFFICULTIES["Medium"][0].mistakes,
     didWin: false,
+    isSoundOn: false,
   };
 
   return {
@@ -111,8 +122,8 @@ export const useGameStore = create<GameState>((set, get) => {
       set({ userIncorrectGuesses: guesses }),
     setCorrectGuesses: (correctGuesses: CorrectGuess[]) =>
       set({ correctGuesses }),
-    setStepDifficulties: (stepDifficulties: StepDifficultyMap) =>
-      set({ stepDifficulties }),
+    setMistakes: (mistakes: number) => set({ mistakes }),
+    setIsSoundOn: (isSoundOn: boolean) => set({ isSoundOn }),
     reset: () => set({ ...initialGameState }),
   };
 });

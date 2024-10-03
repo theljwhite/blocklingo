@@ -1,4 +1,5 @@
 import { useGameStore } from "../../game/store";
+import { useGameAudio } from "../../game/store/AudioContext";
 import {
   ShuffleIcon,
   SoundIcon,
@@ -8,7 +9,10 @@ import {
 import LightModeSwitch from "../UI/LightModeSwitch";
 
 export default function GameToolbar() {
-  const { isLightMode, setIsLightMode } = useGameStore((state) => state);
+  const { isSoundOn, isLightMode, setIsLightMode } = useGameStore(
+    (state) => state
+  );
+  const { toggleSound } = useGameAudio();
 
   return (
     <div className="border-y border-neutral-21 bg-almostblack text-neutral-22">
@@ -36,10 +40,10 @@ export default function GameToolbar() {
                   <LightbulbIcon size={24} />
                 </button>
                 <button
-                  onClick={() => console.log("TODO")}
+                  onClick={toggleSound}
                   className="border-none h-full flex px-2.5 text-neutral-22 bg-almostblack items-center text-lg"
                 >
-                  <SoundIcon muted={true} size={26} />
+                  <SoundIcon muted={!isSoundOn} size={26} />
                 </button>
                 <button
                   onClick={() => console.log("TODO")}
