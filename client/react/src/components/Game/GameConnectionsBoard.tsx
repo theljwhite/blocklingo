@@ -5,7 +5,18 @@ import useGuessConnection from "../../game/hooks/useGuessConnection";
 import useDifficulties from "../../game/hooks/useDifficulties";
 import tailwindConfig from "../../../tailwind.config";
 import resolveConfig from "tailwindcss/resolveConfig";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  correctGuessAnimation,
+  incorrectGuessAnimation,
+  correctGuessTransition,
+  connGroupTransition,
+  liWordAnimation,
+  listItemVariants,
+  listVariants,
+  winStaggerVariant,
+  winSectionVariant,
+} from "../../game/data/animations/connections";
 import GameBoardButton from "./GameBoardButton";
 
 export default function GameConnectionsBoard() {
@@ -16,6 +27,7 @@ export default function GameConnectionsBoard() {
     mistakes,
     userConnectionGuesses,
     userIncorrectGuesses,
+    connectionsStatus,
   } = useGameStore((state) => state);
   const { shuffle, select, deselectAll, guess } = useGuessConnection();
   const { createConnectionsBoard } = useCreateConnection();
@@ -26,32 +38,6 @@ export default function GameConnectionsBoard() {
   }, []);
 
   const tailwindTheme = resolveConfig(tailwindConfig).theme;
-  const incorrectGuessAnimation = {
-    borderColor: tailwindTheme.colors.error[1],
-    x: [0, 10, -10, 0],
-  };
-  const correctGuessAnimation = {
-    borderColor: tailwindTheme.colors.success[1],
-    x: [0, 5, -5, 0],
-    // y: [0, -20, -40, -80],
-  };
-  const correctGuessTransition = {
-    duration: 0.5,
-    times: [0, 0.2, 0.4, 1],
-  };
-
-  const connGroupTransition = {
-    duration: 0.5,
-    delay: 0.2,
-  };
-  const liWordAnimation = {
-    color: ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"],
-  };
-  const liWordTransition = {
-    duration: 0.8,
-    delay: 0.8,
-    ease: "easeIn",
-  };
 
   const rowCount = connectionBoard.length / 4;
   const boardHeight = `calc(${rowCount - 1} * 8px + ${rowCount} * 80px)`;
@@ -98,7 +84,6 @@ export default function GameConnectionsBoard() {
                   return (
                     <motion.section
                       animate={{ opacity: 100 }}
-                      // transition={{ ease: "easeIn" }}
                       key={index}
                       className={`uppercase flex opacity-0 flex-col items-center justify-center text-lg text-almostblack overflow-hidden font-second rounded-xl`}
                       style={{ backgroundColor: correctGuessColors[index] }}
@@ -110,16 +95,16 @@ export default function GameConnectionsBoard() {
                       >
                         {item.connectionGroupName}
                       </motion.h3>
-                      <ol className="list-none">
-                        {/* <li className="inline">
-                          {item.userConnectionGuesses.join(", ")}
-                        </li> */}
+                      <motion.ol
+                        initial="closed"
+                        animate="open"
+                        variants={listVariants}
+                        className="list-none"
+                      >
                         {item.userConnectionGuesses.map((word, index) => {
                           return (
                             <motion.li
-                              initial={{ color: "rgba(0, 0, 0, 0)" }}
-                              animate={liWordAnimation}
-                              transition={liWordTransition}
+                              variants={listItemVariants}
                               key={index}
                               className="inline after:content-[',_'] last:after:content-none"
                             >
@@ -127,7 +112,7 @@ export default function GameConnectionsBoard() {
                             </motion.li>
                           );
                         })}
-                      </ol>
+                      </motion.ol>
                     </motion.section>
                   );
                 })}
@@ -187,28 +172,31 @@ export default function GameConnectionsBoard() {
           <p className="flex items-center gap-2 text-neutral-22">
             Mistakes remaining:
             <span className="flex gap-2.5 min-w-[120px]">
-              {Array(mistakes)
-                .fill("")
-                .map((_, index) => {
-                  return (
-                    <motion.span
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        duration: 0.3,
-                        ease: [0, 0.71, 0.2, 1.01],
-                        scale: {
-                          type: "spring",
-                          damping: 5,
-                          stiffness: 100,
-                          restDelta: 0.001,
-                        },
-                      }}
-                      key={index}
-                      className="w-4 h-4 rounded-full bg-primary-2"
-                    />
-                  );
-                })}
+              <AnimatePresence>
+                {Array(mistakes)
+                  .fill("")
+                  .map((_, index) => {
+                    return (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        transition={{
+                          duration: 0.7,
+                          ease: [0, 0.71, 0.2, 1.01],
+                          scale: {
+                            type: "spring",
+                            damping: 5,
+                            stiffness: 100,
+                            restDelta: 0.001,
+                          },
+                        }}
+                        key={`mistake-${index}`}
+                        className="w-4 h-4 rounded-full bg-primary-2"
+                      />
+                    );
+                  })}
+              </AnimatePresence>
             </span>
           </p>
         </span>

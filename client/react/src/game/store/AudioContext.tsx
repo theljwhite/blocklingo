@@ -13,6 +13,10 @@ const GAME_AUDIO = {
   error: "./audio/error.mp3",
   error_short: "./audio/error-short.mp3",
   success: "./audio/correct1.mp3",
+  sweep: "./audio/sweep-magic.wav",
+  sweep_quiet: "./audio/sweep-one.wav",
+  bell: "./audio/bell.wav",
+  win: "./audio/win.mp3",
 };
 
 const GameAudioContext = createContext<{

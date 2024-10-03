@@ -15,6 +15,7 @@ export default function useGuessConnection() {
     setUserConnectionGuesses,
     setConnectionGroup,
     setMistakes,
+    setConnectionsStatus,
   } = useGameStore((state) => state);
   const { play: playSound } = useGameAudio();
 
@@ -98,18 +99,29 @@ export default function useGuessConnection() {
           (item) => !userConnectionGuesses.includes(item.word)
         );
 
+        if (resetBoard.length === 0) {
+          setConnectionsStatus("Win");
+          playSound("win");
+        }
+
         setConnectionBoard(resetBoard);
         setConnectionGroup(remainingGroups);
         setUserConnectionGuesses([]);
+
+        playSound("sweep");
       }, 2000);
     } else {
       playSound("error_short");
       setUserIncorrectGuesses(userConnectionGuesses);
       setUserConnectionGuesses([]);
 
-      if (mistakes > 0) setMistakes(mistakes - 1);
-
       setTimeout(() => {
+        if (mistakes > 0) setMistakes(mistakes - 1);
+
+        if (mistakes === 1) {
+          setConnectionsStatus("Lose");
+        }
+
         setUserIncorrectGuesses([]);
       }, 2000);
 

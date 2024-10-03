@@ -25,6 +25,8 @@ export type CorrectGuess = {
   userConnectionGuesses: string[];
 };
 
+export type ConnectionsStatus = "idle" | "playing" | "result";
+
 export interface GameState {
   isLoading: boolean;
   isSuccess: boolean;
@@ -35,6 +37,7 @@ export interface GameState {
   connectionBoard: ConnectionItem[];
   connectionGroup: string[];
   connectionGuessGroup: Record<string, string[]>;
+  connectionsStatus: ConnectionsStatus;
   difficulty: Difficulty;
   userConnectionGuesses: string[];
   userIncorrectGuesses: string[];
@@ -57,6 +60,7 @@ export interface GameState {
   setUserConnectionGuesses: (guesses: string[]) => void;
   setUserIncorrectGuesses: (guesses: string[]) => void;
   setCorrectGuesses: (correctGuesses: CorrectGuess[]) => void;
+  setConnectionsStatus: (connectiosnStatus: ConnectionsStatus) => void;
   setIsSoundOn: (isSoundOn: boolean) => void;
   reset: () => void;
 }
@@ -87,6 +91,7 @@ export const useGameStore = create<GameState>((set, get) => {
     connectionBoard: [],
     connectionGroup: [],
     connectionGuessGroup: { triggerWord: ["guess", "guess", "guess"] },
+    connectionsStatus: "playing" as ConnectionsStatus,
     userConnectionGuesses: [],
     userIncorrectGuesses: [],
     correctGuesses: [],
@@ -122,8 +127,11 @@ export const useGameStore = create<GameState>((set, get) => {
       set({ userIncorrectGuesses: guesses }),
     setCorrectGuesses: (correctGuesses: CorrectGuess[]) =>
       set({ correctGuesses }),
+    setConnectionsStatus: (connectionsStatus: ConnectionsStatus) =>
+      set({ connectionsStatus }),
     setMistakes: (mistakes: number) => set({ mistakes }),
     setIsSoundOn: (isSoundOn: boolean) => set({ isSoundOn }),
+
     reset: () => set({ ...initialGameState }),
   };
 });
