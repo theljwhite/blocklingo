@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../../game/store";
-import useCreateConnection from "../../game/hooks/useCreateConnection";
 import useGuessConnection from "../../game/hooks/useGuessConnection";
-import useDifficulties from "../../game/hooks/useDifficulties";
+import useGameStep from "../../game/hooks/useGameStep";
 import {
   CONNECTION_BOARD_WIDTH,
   CORRECT_GUESS_COLORS,
@@ -27,7 +25,7 @@ import GameConnectionsResult from "./GameConnectionsResult";
 
 export default function GameConnectionsBoard() {
   const {
-    difficulty,
+    step,
     connectionBoard,
     correctGuesses,
     mistakes,
@@ -36,14 +34,9 @@ export default function GameConnectionsBoard() {
     connectionsStatus,
   } = useGameStore((state) => state);
   const { shuffle, select, deselectAll, guess } = useGuessConnection();
-  const { createConnectionsBoard } = useCreateConnection();
-  const { getDifficultySettings } = useDifficulties();
 
+  const { handleStepClick } = useGameStep();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    createConnections();
-  }, []);
 
   const tailwindTheme = resolveConfig(tailwindConfig).theme;
 
@@ -52,13 +45,6 @@ export default function GameConnectionsBoard() {
 
   const rowCount = connectionBoard.length / 4;
   const boardHeight = `calc(${rowCount - 1} * 8px + ${rowCount} * 80px)`;
-
-  const createConnections = async (): Promise<any> => {
-    const used = new Set<number>();
-    const difficultySettings = getDifficultySettings(difficulty);
-
-    await createConnectionsBoard(used, difficultySettings.wordLimit ?? 5);
-  };
 
   return (
     <div>
@@ -217,8 +203,8 @@ export default function GameConnectionsBoard() {
           />
           <GameBoardButton
             type="button"
-            text="Play again"
-            onClick={() => console.log("TODO play again")}
+            text="Next stage"
+            onClick={() => handleStepClick(step + 1)}
             disabled={false}
             bgClass="bg-almostblack"
             textColorClass="text-primary-1"

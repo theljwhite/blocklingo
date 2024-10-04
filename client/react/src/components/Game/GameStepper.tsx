@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useGameStore } from "../../game/store";
+import useCreateConnection from "../../game/hooks/useCreateConnection";
+import useDifficulties from "../../game/hooks/useDifficulties";
+
 import GameLoading from "./GameLoading";
 import GameConnectionsBoard from "./GameConnectionsBoard";
+import GameContextBoard from "./GameContextBoard";
 
 type GameStep = {
   id: number;
@@ -18,52 +22,38 @@ const gameSteps: GameStep[] = [
   {
     id: 1,
     title: "Wordgame",
-    content: <span>TODO: Wordgame</span>,
+    content: <GameContextBoard />,
   },
   {
     id: 2,
-    title: "Find context",
-    content: <span>TODO: Context</span>,
+    title: "Something else",
+    content: <span>TODO: Something else</span>,
   },
 ];
 
 export default function GameStepper() {
-  const [gameLoading, setGameLoading] = useState<boolean>(false);
   const {
+    difficulty,
     isLoading,
     errors,
     step: currStep,
-    furthestStep,
-    setStep,
-    setFurthestStep,
   } = useGameStore((state) => state);
+  const { getDifficultySettings } = useDifficulties();
+  const { createConnectionsBoard } = useCreateConnection();
 
-  const handleStepClick = (index: number): void => {
-    if (index < currStep) {
-      setStep(index);
-      return;
-    }
+  useEffect(() => {
+    initializeStep();
+  }, []);
 
-    for (
-      let stepToValidate = currStep;
-      stepToValidate <= index;
-      stepToValidate++
-    ) {
-      // const errorMessage = validateStep(stepToValidate, state);
-      // if (errorMessage){
-      // setStep(stepToValidate);
-      //  return;
-      // }
+  const initializeStep = async (): Promise<void> => {
+    const difficultySettings = getDifficultySettings(difficulty);
+    const { wordLimit } = difficultySettings;
 
-      setStep(index);
+    const used = new Set<number>();
 
-      if (index > furthestStep) {
-        setFurthestStep(index);
-      }
-    }
+    if (currStep === 0) await createConnectionsBoard(used, wordLimit);
   };
 
-  if (gameLoading) return <GameLoading />;
-
+  if (isLoading) return <GameLoading />;
   return gameSteps[currStep].content;
 }

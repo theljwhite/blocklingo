@@ -41,7 +41,7 @@ export default function GameConnectionsResult() {
             <motion.section
               variants={showGuessesSectionVariant}
               key={`result-${index}`}
-              className={`uppercase flex opacity-0 flex-col items-center justify-center text-lg text-almostblack overflow-hidden font-second rounded-xl`}
+              className="uppercase flex opacity-0 flex-col items-center justify-center text-lg text-almostblack overflow-hidden font-second rounded-xl"
               style={{ backgroundColor: CORRECT_GUESS_COLORS[index] }}
             >
               <motion.h3
