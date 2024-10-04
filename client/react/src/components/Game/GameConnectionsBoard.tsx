@@ -40,8 +40,10 @@ export default function GameConnectionsBoard() {
 
   const tailwindTheme = resolveConfig(tailwindConfig).theme;
 
-  const gameIsOver =
-    connectionsStatus === "Won" || connectionsStatus === "Lost";
+  const won = connectionsStatus === "Won";
+  const lost = connectionsStatus === "Lost";
+
+  const gameIsOver = won || lost;
 
   const rowCount = connectionBoard.length / 4;
   const boardHeight = `calc(${rowCount - 1} * 8px + ${rowCount} * 80px)`;

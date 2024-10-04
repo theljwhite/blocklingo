@@ -20,6 +20,7 @@ export default function LightModeSwitch({
     <div className="parent group relative flex items-center justify-center">
       <label className="leading-0 relative inline-block align-middle">
         <input
+          id="light-mode-switch"
           onChange={onChange}
           type="checkbox"
           checked={checked}

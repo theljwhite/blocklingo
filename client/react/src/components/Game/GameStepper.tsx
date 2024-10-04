@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useGameStore } from "../../game/store";
 import useCreateConnection from "../../game/hooks/useCreateConnection";
 import useDifficulties from "../../game/hooks/useDifficulties";
-
 import GameLoading from "./GameLoading";
 import GameConnectionsBoard from "./GameConnectionsBoard";
 import GameContextBoard from "./GameContextBoard";
