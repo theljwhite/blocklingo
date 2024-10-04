@@ -17,6 +17,7 @@ const GAME_AUDIO = {
   sweep_quiet: "./audio/sweep-one.wav",
   bell: "./audio/bell.wav",
   win: "./audio/win.mp3",
+  lost: "./audio/lost-organ.mp3",
 };
 
 const GameAudioContext = createContext<{

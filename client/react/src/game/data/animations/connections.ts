@@ -31,7 +31,6 @@ export const liWordTransition = {
   duration: 0.8,
   delay: 0.8,
   ease: "easeIn",
-  // ease: [0.17, 0.67, 0.83, 0.67],
 };
 
 export const listVariants = {
@@ -71,28 +70,67 @@ export const listItemVariants = {
   },
 };
 
-export const winStaggerVariant = {
-  open: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+export const showGuessesStaggerVariant = {
+  visible: {
+    transition: { staggerChildren: 0.3, delayChildren: 0.1 },
   },
-  closed: {
+  hidden: {
     transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
 };
-
-export const winSectionVariant = {
-  open: {
+export const showGuessesSectionVariant = {
+  visible: {
     y: 0,
     opacity: 1,
     transition: {
-      y: { stiffness: 1000, velocity: -100 },
+      y: { stiffness: 1000, velocity: -100, scale: 1.04 },
     },
   },
-  closed: {
+  hidden: {
     y: 50,
     opacity: 0,
     transition: {
-      y: { stiffness: 1000 },
+      y: { stiffness: 1000, scale: 1.0 },
+    },
+  },
+};
+
+export const showGuessesListVariants = {
+  open: {
+    transition: { staggerChildren: 0.3, delayChildren: 2.0 },
+  },
+  closed: {
+    transition: {
+      staggerChildren: 0.05,
+      staggerDirection: -1,
+    },
+  },
+};
+export const showGuessesWordAnimation = {
+  color: ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"],
+};
+
+export const showGuessesListItemVariants = {
+  open: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 2.0,
+      type: "spring",
+      stiffness: 300,
+      damping: 20,
+      x: { stiffness: 1000, velocity: -100 },
+    },
+  },
+  closed: {
+    x: -50,
+    opacity: 0,
+    transition: {
+      duration: 2.0,
+      type: "spring",
+      stiffness: 300,
+      damping: 20,
+      x: { stiffness: 1000 },
     },
   },
 };

@@ -100,7 +100,7 @@ export default function useGuessConnection() {
         );
 
         if (resetBoard.length === 0) {
-          setConnectionsStatus("Win");
+          setConnectionsStatus("Won");
           playSound("win");
         }
 
@@ -119,7 +119,9 @@ export default function useGuessConnection() {
         if (mistakes > 0) setMistakes(mistakes - 1);
 
         if (mistakes === 1) {
-          setConnectionsStatus("Lose");
+          setConnectionBoard([]);
+          setConnectionsStatus("Lost");
+          playSound("lost");
         }
 
         setUserIncorrectGuesses([]);

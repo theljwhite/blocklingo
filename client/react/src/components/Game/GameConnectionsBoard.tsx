@@ -1,11 +1,13 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../../game/store";
 import useCreateConnection from "../../game/hooks/useCreateConnection";
 import useGuessConnection from "../../game/hooks/useGuessConnection";
 import useDifficulties from "../../game/hooks/useDifficulties";
-import tailwindConfig from "../../../tailwind.config";
-import resolveConfig from "tailwindcss/resolveConfig";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  CONNECTION_BOARD_WIDTH,
+  CORRECT_GUESS_COLORS,
+} from "../../game/data/constants";
 import {
   correctGuessAnimation,
   incorrectGuessAnimation,
@@ -14,10 +16,13 @@ import {
   liWordAnimation,
   listItemVariants,
   listVariants,
-  winStaggerVariant,
-  winSectionVariant,
 } from "../../game/data/animations/connections";
+import { ROUTE_LEADERBOARD } from "../../constants/routes";
+import tailwindConfig from "../../../tailwind.config";
+import resolveConfig from "tailwindcss/resolveConfig";
+import { motion, AnimatePresence } from "framer-motion";
 import GameBoardButton from "./GameBoardButton";
+import GameConnectionsResult from "./GameConnectionsResult";
 
 export default function GameConnectionsBoard() {
   const {
@@ -33,23 +38,19 @@ export default function GameConnectionsBoard() {
   const { createConnectionsBoard } = useCreateConnection();
   const { getDifficultySettings } = useDifficulties();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     createConnections();
   }, []);
 
   const tailwindTheme = resolveConfig(tailwindConfig).theme;
 
+  const gameIsOver =
+    connectionsStatus === "Won" || connectionsStatus === "Lost";
+
   const rowCount = connectionBoard.length / 4;
   const boardHeight = `calc(${rowCount - 1} * 8px + ${rowCount} * 80px)`;
-  const boardWidth = "calc(3 * 8px + 4 * 150px)";
-  const correctGuessColors = [
-    "#bbf7d0",
-    "#fed7aa",
-    "#bae6fd",
-    "#e9d5ff",
-    "#fbcfe8",
-    "#99f6e4",
-  ];
 
   const createConnections = async (): Promise<any> => {
     const used = new Set<number>();
@@ -64,66 +65,70 @@ export default function GameConnectionsBoard() {
         <h2>Create groups of four!</h2>
         <fieldset
           style={{
-            width: boardWidth,
+            width: CONNECTION_BOARD_WIDTH,
             height: "calc(3 * 8px + 4 * 80px)",
           }}
           className="my-6 relative"
         >
           <legend className="invisible">More instructions</legend>
 
-          {correctGuesses.length > 0 && (
-            <article className="block">
-              <ol
-                style={{
-                  width: boardWidth,
-                  height: "calc(3 * 8px + 4 * 80px)",
-                }}
-                className="grid gap-2 grid-rows-4 absolute bottom-0 grid-cols-1 list-none min-w-[0px] min-h-[0px]"
-              >
-                {correctGuesses.map((item, index) => {
-                  return (
-                    <motion.section
-                      animate={{ opacity: 100 }}
-                      key={index}
-                      className={`uppercase flex opacity-0 flex-col items-center justify-center text-lg text-almostblack overflow-hidden font-second rounded-xl`}
-                      style={{ backgroundColor: correctGuessColors[index] }}
-                    >
-                      <motion.h3
-                        animate={liWordAnimation}
-                        transition={connGroupTransition}
-                        className="font-bold text-black"
+          {gameIsOver ? (
+            <GameConnectionsResult />
+          ) : (
+            correctGuesses.length > 0 && (
+              <article className="block">
+                <ol
+                  style={{
+                    width: CONNECTION_BOARD_WIDTH,
+                    height: "calc(3 * 8px + 4 * 80px)",
+                  }}
+                  className="grid gap-2 grid-rows-4 absolute bottom-0 grid-cols-1 list-none min-w-[0px] min-h-[0px]"
+                >
+                  {correctGuesses.map((item, index) => {
+                    return (
+                      <motion.section
+                        animate={{ opacity: 100 }}
+                        key={index}
+                        className="uppercase flex opacity-0 flex-col items-center justify-center text-lg text-almostblack overflow-hidden font-second rounded-xl"
+                        style={{ backgroundColor: CORRECT_GUESS_COLORS[index] }}
                       >
-                        {item.connectionGroupName}
-                      </motion.h3>
-                      <motion.ol
-                        initial="closed"
-                        animate="open"
-                        variants={listVariants}
-                        className="list-none"
-                      >
-                        {item.userConnectionGuesses.map((word, index) => {
-                          return (
-                            <motion.li
-                              variants={listItemVariants}
-                              key={index}
-                              className="inline after:content-[',_'] last:after:content-none"
-                            >
-                              {word}
-                            </motion.li>
-                          );
-                        })}
-                      </motion.ol>
-                    </motion.section>
-                  );
-                })}
-              </ol>
-            </article>
+                        <motion.h3
+                          animate={liWordAnimation}
+                          transition={connGroupTransition}
+                          className="font-bold text-black"
+                        >
+                          {item.connectionGroupName}
+                        </motion.h3>
+                        <motion.ol
+                          initial="closed"
+                          animate="open"
+                          variants={listVariants}
+                          className="list-none"
+                        >
+                          {item.userConnectionGuesses.map((word, index) => {
+                            return (
+                              <motion.li
+                                variants={listItemVariants}
+                                key={index}
+                                className="inline after:content-[',_'] last:after:content-none"
+                              >
+                                {word}
+                              </motion.li>
+                            );
+                          })}
+                        </motion.ol>
+                      </motion.section>
+                    );
+                  })}
+                </ol>
+              </article>
+            )
           )}
 
           <div>
             <div
               style={{
-                width: boardWidth,
+                width: CONNECTION_BOARD_WIDTH,
                 height: boardHeight,
               }}
               className={`grid-rows-${rowCount} grid gap-2 absolute bottom-0 grid-cols-4 min-h-[0px] min-w-[0px]`}
@@ -169,68 +174,97 @@ export default function GameConnectionsBoard() {
       </section>
       <section className="block">
         <span className="flex justify-center mb-6">
-          <p className="flex items-center gap-2 text-neutral-22">
-            Mistakes remaining:
-            <span className="flex gap-2.5 min-w-[120px]">
-              <AnimatePresence>
-                {Array(mistakes)
-                  .fill("")
-                  .map((_, index) => {
-                    return (
-                      <motion.span
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        transition={{
-                          duration: 0.7,
-                          ease: [0, 0.71, 0.2, 1.01],
-                          scale: {
-                            type: "spring",
-                            damping: 5,
-                            stiffness: 100,
-                            restDelta: 0.001,
-                          },
-                        }}
-                        key={`mistake-${index}`}
-                        className="w-4 h-4 rounded-full bg-primary-2"
-                      />
-                    );
-                  })}
-              </AnimatePresence>
-            </span>
-          </p>
+          {gameIsOver ? (
+            <p className="flex items-center gap-2 text-neutral-22">
+              You {connectionsStatus} the connections stage!
+            </p>
+          ) : (
+            <p className="flex items-center gap-2 text-neutral-22">
+              Mistakes remaining:
+              <span className="flex gap-2.5 min-w-[120px]">
+                <AnimatePresence>
+                  {Array(mistakes)
+                    .fill("")
+                    .map((_, index) => {
+                      return (
+                        <motion.span
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.5 }}
+                          transition={{
+                            duration: 0.7,
+                            ease: [0, 0.71, 0.2, 1.01],
+                            scale: {
+                              type: "spring",
+                              damping: 5,
+                              stiffness: 100,
+                              restDelta: 0.001,
+                            },
+                          }}
+                          key={`mistake-${index}`}
+                          className="w-4 h-4 rounded-full bg-primary-2"
+                        />
+                      );
+                    })}
+                </AnimatePresence>
+              </span>
+            </p>
+          )}
         </span>
       </section>
-      <section className="flex justify-center gap-2.5">
-        <GameBoardButton
-          type="button"
-          text="Shuffle"
-          onClick={shuffle}
-          disabled={false}
-          bgClass="bg-almostblack"
-          textColorClass="text-neutral-22"
-          borderColorClass="border-neutral-22"
-        />
-        <GameBoardButton
-          type="button"
-          text="Deselect all"
-          onClick={deselectAll}
-          disabled={userConnectionGuesses.length === 0}
-          bgClass="bg-almostblack"
-          textColorClass="text-neutral-22"
-          borderColorClass="border-neutral-22"
-        />
-        <GameBoardButton
-          type="button"
-          text="Submit"
-          onClick={guess}
-          disabled={userConnectionGuesses.length < 4}
-          bgClass="bg-almostblack"
-          textColorClass="text-primary-1"
-          borderColorClass="border-primary-1"
-          disabledClass="disabled:text-neutral-22 disabled:opacity-50 disabled:bg-almostblack disabled:border-neutral-22"
-        />
-      </section>
+      {gameIsOver ? (
+        <section className="flex justify-center gap-2.5">
+          <GameBoardButton
+            type="button"
+            text="View Results"
+            onClick={() => navigate(ROUTE_LEADERBOARD)}
+            disabled={false}
+            bgClass="bg-almostblack"
+            textColorClass="text-neutral-22"
+            borderColorClass="border-neutral-22"
+          />
+          <GameBoardButton
+            type="button"
+            text="Play again"
+            onClick={() => console.log("TODO play again")}
+            disabled={false}
+            bgClass="bg-almostblack"
+            textColorClass="text-primary-1"
+            borderColorClass="border-primary-1"
+          />
+        </section>
+      ) : (
+        <section className="flex justify-center gap-2.5">
+          <GameBoardButton
+            type="button"
+            text="Shuffle"
+            onClick={shuffle}
+            disabled={false}
+            bgClass="bg-almostblack"
+            textColorClass="text-neutral-22"
+            borderColorClass="border-neutral-22"
+          />
+          <GameBoardButton
+            type="button"
+            text="Deselect all"
+            onClick={deselectAll}
+            disabled={userConnectionGuesses.length === 0}
+            bgClass="bg-almostblack"
+            textColorClass="text-neutral-22"
+            borderColorClass="border-neutral-22"
+          />
+          <GameBoardButton
+            type="button"
+            text="Submit"
+            onClick={guess}
+            disabled={userConnectionGuesses.length < 4}
+            bgClass="bg-almostblack"
+            textColorClass="text-primary-1"
+            borderColorClass="border-primary-1"
+            disabledClass="disabled:text-neutral-22 disabled:opacity-50 disabled:bg-almostblack disabled:border-neutral-22"
+          />
+        </section>
+      )}
     </div>
   );
 }
