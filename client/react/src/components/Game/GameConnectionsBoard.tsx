@@ -16,6 +16,7 @@ import {
   liWordAnimation,
   listItemVariants,
   listVariants,
+  slowDispappearTransition,
 } from "../../game/data/animations/connections";
 import { ROUTE_LEADERBOARD } from "../../constants/routes";
 import tailwindConfig from "../../../tailwind.config";
@@ -191,16 +192,7 @@ export default function GameConnectionsBoard() {
                           initial={{ opacity: 0, scale: 0.5 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.5 }}
-                          transition={{
-                            duration: 0.7,
-                            ease: [0, 0.71, 0.2, 1.01],
-                            scale: {
-                              type: "spring",
-                              damping: 5,
-                              stiffness: 100,
-                              restDelta: 0.001,
-                            },
-                          }}
+                          transition={slowDispappearTransition}
                           key={`mistake-${index}`}
                           className="w-4 h-4 rounded-full bg-primary-2"
                         />

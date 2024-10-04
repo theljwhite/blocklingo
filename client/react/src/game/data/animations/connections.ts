@@ -3,6 +3,17 @@ import resolveConfig from "tailwindcss/resolveConfig";
 
 const tailwindTheme = resolveConfig(tailwindConfig).theme;
 
+export const slowDispappearTransition = {
+  duration: 0.7,
+  ease: [0, 0.71, 0.2, 1.01],
+  scale: {
+    type: "spring",
+    damping: 5,
+    stiffness: 100,
+    restDelta: 0.001,
+  },
+};
+
 export const incorrectGuessAnimation = {
   borderColor: tailwindTheme.colors.error[1],
   x: [0, 10, -10, 0],
