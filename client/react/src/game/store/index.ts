@@ -96,8 +96,7 @@ export const useGameStore = create<GameState>((set, get) => {
     userIncorrectGuesses: [],
     correctGuesses: [],
     difficulty: "Medium" as Difficulty,
-    // mistakes: STEP_DIFFICULTIES["Medium"][0].mistakes,
-    mistakes: 1,
+    mistakes: STEP_DIFFICULTIES["Medium"][0].mistakes,
     didWin: false,
     isSoundOn: false,
   };
