@@ -12,17 +12,27 @@ import {
   CORRECT_GUESS_COLORS,
 } from "../../game/data/constants";
 
+import { useEffect } from "react";
+import { doConfetti, doSadConfetti } from "../../game/data/misc/particles";
+
 export default function GameConnectionsResult() {
   const { correctGuesses, connectionGuessGroup, connectionsStatus } =
     useGameStore((state) => state);
 
-  const guessesToDisplay: CorrectGuess[] =
-    connectionsStatus === "Won"
-      ? correctGuesses
-      : Object.keys(connectionGuessGroup).map((groupName) => ({
-          connectionGroupName: groupName,
-          userConnectionGuesses: connectionGuessGroup[groupName],
-        }));
+  const won = connectionsStatus === "Won";
+  const lost = connectionsStatus === "Lost";
+
+  const guessesToDisplay: CorrectGuess[] = won
+    ? correctGuesses
+    : Object.keys(connectionGuessGroup).map((groupName) => ({
+        connectionGroupName: groupName,
+        userConnectionGuesses: connectionGuessGroup[groupName],
+      }));
+
+  useEffect(() => {
+    if (won) doConfetti();
+    if (lost) doSadConfetti();
+  }, []);
 
   return (
     <article className="block">

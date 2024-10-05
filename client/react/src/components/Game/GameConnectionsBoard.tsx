@@ -42,7 +42,6 @@ export default function GameConnectionsBoard() {
 
   const won = connectionsStatus === "Won";
   const lost = connectionsStatus === "Lost";
-
   const gameIsOver = won || lost;
 
   const rowCount = connectionBoard.length / 4;
@@ -165,7 +164,7 @@ export default function GameConnectionsBoard() {
         <span className="flex justify-center mb-6">
           {gameIsOver ? (
             <p className="flex items-center gap-2 text-neutral-22">
-              You {connectionsStatus} the connections stage!
+              You {connectionsStatus.toLowerCase()} the connections stage!
             </p>
           ) : (
             <p className="flex items-center gap-2 text-neutral-22">
