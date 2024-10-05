@@ -217,19 +217,3 @@ ALTER TABLE [UserAchievement]
 GO
 
 
-
-SET IDENTITY_INSERT [UserType] ON
-INSERT INTO [UserType] ([Id], [Name])
-VALUES 
-    (1, 'Admin'),
-    (2, 'Player')
-SET IDENTITY_INSERT [UserType] OFF
-GO
-
-SET IDENTITY_INSERT [UserProfile] ON
-INSERT INTO [UserProfile]
-  ([Id], [Username], [Password], [FirstName], [LastName], [Email], [Avatar], [WalletAddress], [CreatedAt], [LastLoginDate], [UserTypeId])
-VALUES 
-  (1, 'schismlj', 'haha', 'LJ', 'White', 'theljwhite@gmail.com', null, null, '09-20-2025', null, 1),
-  (2, 'jimbo43', 'hehe', 'Jim', 'Bo', 'jimbo@fakemail.fake', null, null, '09-20-2025', null, 2)
-SET IDENTITY_INSERT [UserProfile] OFF;
