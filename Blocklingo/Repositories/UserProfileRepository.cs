@@ -1,6 +1,5 @@
 ﻿using Blocklingo.Models; 
 using Blocklingo.Utils;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 
 //TODO - can hash passwords. for demo purposes, plain text works.
