@@ -1,11 +1,11 @@
-﻿using Capstone1.Models; 
-using Capstone1.Utils;
+﻿using Blocklingo.Models; 
+using Blocklingo.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 
 //TODO - can hash passwords. for demo purposes, plain text works.
 
-namespace Capstone1.Repositories
+namespace Blocklingo.Repositories
 {
     public class UserProfileRepository: BaseRepository, IUserProfileRepository
     {

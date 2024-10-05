@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Capstone1.Utils
+namespace Blocklingo.Utils
 {
     /// <summary>
     ///  A set of useful function for interacting with ADO.NET

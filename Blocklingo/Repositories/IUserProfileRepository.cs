@@ -1,6 +1,6 @@
-﻿using Capstone1.Models; 
+﻿using Blocklingo.Models; 
 
-namespace Capstone1.Repositories
+namespace Blocklingo.Repositories
 {
     public interface IUserProfileRepository
     {

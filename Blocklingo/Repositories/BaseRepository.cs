@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Capstone1.Repositories
+namespace Blocklingo.Repositories
 {
     public abstract class BaseRepository
     {

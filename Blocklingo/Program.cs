@@ -1,6 +1,6 @@
-using Capstone1.Repositories;
+using Blocklingo.Repositories;
 
-namespace Capstone1
+namespace Blocklingo
 {
     public class Program
     {

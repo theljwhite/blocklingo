@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Capstone1.Repositories;
-using Capstone1.Models; 
+using Blocklingo.Repositories;
+using Blocklingo.Models; 
 using Microsoft.AspNetCore.Identity.Data;
 
-namespace Capstone1.Controllers
+namespace Blocklingo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

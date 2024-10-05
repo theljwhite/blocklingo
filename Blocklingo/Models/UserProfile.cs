@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Capstone1.Models
+namespace Blocklingo.Models
 {
     public class UserProfile
     {
