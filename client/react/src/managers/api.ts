@@ -1,4 +1,5 @@
 import { userManager } from "./user-profile-manager";
+import { puzzleManager } from "./puzzle-manager";
 
 export type ApiError = {
   error: string;
@@ -6,6 +7,7 @@ export type ApiError = {
 
 export const api = {
   users: userManager,
+  puzzle: puzzleManager,
 };
 
 const defaultPostHeaders = { "Content-Type": "application/json" };

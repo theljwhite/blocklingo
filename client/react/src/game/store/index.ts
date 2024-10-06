@@ -45,6 +45,8 @@ export interface GameState {
   mistakes: number;
   didWin: boolean;
   isSoundOn: boolean;
+  isAdminMode: boolean;
+  isResetting: boolean;
   setIsLoading: (isLoading: boolean) => void;
   setIsSuccess: (isSuccess: boolean) => void;
   setError: (step: number, error: GameError) => void;
@@ -62,6 +64,9 @@ export interface GameState {
   setCorrectGuesses: (correctGuesses: CorrectGuess[]) => void;
   setConnectionsStatus: (connectionsStatus: ConnectionsStatus) => void;
   setIsSoundOn: (isSoundOn: boolean) => void;
+  setIsAdminMode: (isAdminMode: boolean) => void;
+  setIsResetting: (isResetting: boolean) => void;
+  resetStep: () => void;
   reset: () => void;
 }
 
@@ -99,6 +104,8 @@ export const useGameStore = create<GameState>((set, get) => {
     mistakes: STEP_DIFFICULTIES["Medium"][0].mistakes,
     didWin: false,
     isSoundOn: false,
+    isAdminMode: true,
+    isResetting: false,
   };
 
   return {
@@ -131,6 +138,15 @@ export const useGameStore = create<GameState>((set, get) => {
       set({ connectionsStatus }),
     setMistakes: (mistakes: number) => set({ mistakes }),
     setIsSoundOn: (isSoundOn: boolean) => set({ isSoundOn }),
+    setIsAdminMode: (isAdminMode: boolean) => set({ isAdminMode }),
+    setIsResetting: (isResetting: boolean) => set({ isResetting }),
     reset: () => set({ ...initialGameState }),
+    resetStep: () =>
+      set({
+        ...initialGameState,
+        isResetting: true,
+        step: get().step,
+        isAdminMode: get().isAdminMode,
+      }),
   };
 });

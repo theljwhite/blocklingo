@@ -1,18 +1,29 @@
 import { useGameStore } from "../../game/store";
 import { useGameAudio } from "../../game/store/AudioContext";
+import { useSession } from "../../managers/auth/useSession";
+import { UserTypeValue } from "../../managers/user-profile-manager";
 import {
   ShuffleIcon,
   SoundIcon,
   BrainIcon,
   LightbulbIcon,
 } from "../UI/Icons/game";
+import { ShieldIconOne, ResetIcon } from "../UI/Icons";
 import LightModeSwitch from "../UI/LightModeSwitch";
 
 export default function GameToolbar() {
-  const { isSoundOn, isLightMode, setIsLightMode } = useGameStore(
-    (state) => state
-  );
+  const {
+    isSoundOn,
+    isLightMode,
+    isAdminMode,
+    setIsLightMode,
+    setIsAdminMode,
+    resetStep,
+  } = useGameStore((state) => state);
   const { toggleSound } = useGameAudio();
+
+  const { session } = useSession();
+  const isUserAdmin = session?.user?.userTypeId === UserTypeValue.Admin;
 
   return (
     <div className="border-y border-neutral-21 bg-almostblack text-neutral-22">
@@ -21,6 +32,24 @@ export default function GameToolbar() {
           <header className="w-full block">
             <section className="relative flex flex-row items-center justify-end h-6">
               <div className="flex flex-row items-center h-full text-neutral-22">
+                {isUserAdmin && (
+                  <button
+                    onClick={() => setIsAdminMode(!isAdminMode)}
+                    className={`${
+                      isAdminMode ? "text-primary-1" : "text-neutral-22"
+                    } border-none h-full flex px-2.5 bg-almostblack items-center text-lg`}
+                  >
+                    <ShieldIconOne size={24} />
+                  </button>
+                )}
+                {isUserAdmin && (
+                  <button
+                    onClick={resetStep}
+                    className="border-none h-full flex px-2.5 text-neutral-22 bg-almostblack items-center text-lg"
+                  >
+                    <ResetIcon size={24} />
+                  </button>
+                )}
                 <button
                   onClick={() => console.log("TODO")}
                   className="border-none h-full flex px-2.5 text-neutral-22 bg-almostblack items-center text-lg"

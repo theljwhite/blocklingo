@@ -6,3 +6,6 @@ export const USER_PROFILE_LOGIN = `${USER_PROFILE_BASE}/login`;
 
 export const PUZZLE_BASE = `${API_BASE}/Puzzle`;
 export const PUZZLE_BY_ID = (id: number) => `${PUZZLE_BASE}/${id}`;
+export const PUZZLE_DETAILS_BY_ID = (id: number) =>
+  `${PUZZLE_BASE}/${id}/details`;
+export const PUZZLE_WORDS_BY_ID = (id: number) => `${PUZZLE_BASE}/${id}/words`;

@@ -1,7 +1,11 @@
 import { useGameStore } from "../store";
+import { api } from "../../managers/api";
 import { triggerWords } from "../data/words/connections";
 import { getTriggerWordsFromQuery } from "../logic/similar-words";
 import { toastError } from "../../components/UI/Toast/Toast";
+
+//TODO - update createConnectionsBoardDb so that it chooses from multiple,
+//puzzle possibilities and not by one id
 
 export default function useCreateConnection() {
   const {
@@ -61,8 +65,6 @@ export default function useCreateConnection() {
       setConnectionGroup(selectedWords);
       setConnectionGuessGroup(connectionGuessGroup);
 
-      console.log("CGG", connectionGuessGroup);
-
       setIsLoading(false);
       setIsSuccess(true);
     } catch (error) {
@@ -71,5 +73,27 @@ export default function useCreateConnection() {
     }
   };
 
-  return { createConnectionsBoard };
+  const createConnectionsBoardDb = async (puzzleId: number): Promise<void> => {
+    try {
+      const puzzleWords = await api.puzzle.getPuzzleWordsById(puzzleId);
+
+      if (!puzzleWords) throw new Error();
+
+      const connectionGroup = Object.keys(puzzleWords);
+      const boardWords = Object.values(puzzleWords).flat();
+
+      const shuffledWords = shuffleArray(
+        boardWords.map((word) => ({ word, selected: false }))
+      );
+
+      setConnectionBoard(shuffledWords);
+      setConnectionGroup(connectionGroup);
+      setConnectionGuessGroup(puzzleWords);
+    } catch (error) {
+      setError(0, { step: 0, message: "Failed to create connecitons board" });
+      toastError("Failed to create connections board.");
+    }
+  };
+
+  return { createConnectionsBoard, createConnectionsBoardDb };
 }

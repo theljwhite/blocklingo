@@ -35,14 +35,22 @@ export default function GameStepper() {
     difficulty,
     isLoading,
     errors,
-    step: currStep,
+    step,
+    isAdminMode,
+    isResetting,
+    setIsResetting,
   } = useGameStore((state) => state);
   const { getDifficultySettings } = useDifficulties();
-  const { createConnectionsBoard } = useCreateConnection();
+  const { createConnectionsBoard, createConnectionsBoardDb } =
+    useCreateConnection();
 
   useEffect(() => {
     initializeStep();
   }, []);
+
+  useEffect(() => {
+    if (isResetting) initializeStep();
+  }, [isResetting, step, isAdminMode]);
 
   const initializeStep = async (): Promise<void> => {
     const difficultySettings = getDifficultySettings(difficulty);
@@ -50,9 +58,31 @@ export default function GameStepper() {
 
     const used = new Set<number>();
 
-    if (currStep === 0) await createConnectionsBoard(used, wordLimit);
+    await determineAndRunDataSource(used, wordLimit);
+
+    setIsResetting(false);
+  };
+
+  const determineAndRunDataSource = async (
+    used: Set<number>,
+    wordLimit: number
+  ): Promise<void> => {
+    const fetchDataForStep = async (): Promise<void> => {
+      if (step === 0) {
+        return isAdminMode
+          ? await createConnectionsBoardDb(1)
+          : await createConnectionsBoard(used, wordLimit);
+      }
+
+      if (step === 1) {
+        console.log(`STEP 1 in ${isAdminMode ? "admin" : "non-admin"} mode`);
+        //TODO data for step 1
+      }
+    };
+
+    await fetchDataForStep();
   };
 
   if (isLoading) return <GameLoading />;
-  return gameSteps[currStep].content;
+  return gameSteps[step].content;
 }
