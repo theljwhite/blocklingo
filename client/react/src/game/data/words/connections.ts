@@ -4,6 +4,6 @@ export const generalHypernyms = ["station", "embed", "boat", "plane"];
 
 export const triggerWords = [
   ["cow", "tree", "dog", "fruit"],
-  //   ["art", "paper", "pastry", "canoe"],
-  //   ["football", "duck", "street", "garbage"],
+  ["art", "paper", "pastry", "canoe"],
+  ["football", "duck", "street", "garbage"],
 ];

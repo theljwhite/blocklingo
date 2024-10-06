@@ -113,3 +113,102 @@ VALUES
     (16, 1, 16);
 SET IDENTITY_INSERT [PuzzlePuzzleWord] OFF; 
 GO
+
+-- Add another puzzle manually for now: 
+
+SET IDENTITY_INSERT [TriggerGroup] ON;
+INSERT INTO [TriggerGroup] ([Id], [Name], [CreatedAt])
+VALUES (2, 'Example Puzzle Trigger Group 2', GETDATE());
+SET IDENTITY_INSERT [TriggerGroup] OFF;
+GO
+
+SET IDENTITY_INSERT [TriggerWord] ON;
+INSERT INTO [TriggerWord] ([Id], [Word], [TriggerGroupId], [CreatedAt])
+VALUES
+    (5, 'football terms', 2, GETDATE()),
+    (6, 'relating to a street', 2, GETDATE()),
+    (7, 'duck', 2, GETDATE()),
+    (8, 'garbage', 2, GETDATE());
+SET IDENTITY_INSERT [TriggerWord] OFF;
+GO
+
+SET IDENTITY_INSERT [PuzzleWord] ON;
+INSERT INTO [PuzzleWord] ([Id], [Word], [TriggerWordId], [CreatedAt])
+VALUES
+    -- Puzzle words for 'football terms'
+    (17, 'nfl', 5, GETDATE()),
+    (18, 'afl', 5, GETDATE()),
+    (19, 'linebacker', 5, GETDATE()),
+    (20, 'lineman', 5, GETDATE()),
+
+    -- Puzzle words for 'relating to a street'
+    (21, 'downtown', 6, GETDATE()),
+    (22, 'boulevard', 6, GETDATE()),
+    (23, 'avenue', 6, GETDATE()),
+    (24, 'subway', 6, GETDATE()),
+
+    -- Puzzle words for 'duck'
+    (25, 'anas', 7, GETDATE()),
+    (26, 'pochard', 7, GETDATE()),
+    (27, 'daffy', 7, GETDATE()),
+    (28, 'coot', 7, GETDATE()),
+
+    -- Puzzle words for 'garbage'
+    (29, 'dumpster', 8, GETDATE()),
+    (30, 'dump', 8, GETDATE()),
+    (31, 'scow', 8, GETDATE()),
+    (32, 'pail', 8, GETDATE());
+SET IDENTITY_INSERT [PuzzleWord] OFF;
+GO
+
+SET IDENTITY_INSERT [GuessWord] ON; 
+INSERT INTO [GuessWord] ([Id], [Word], [CreatedAt])
+VALUES
+    (2, 'bacon', GETDATE())
+SET IDENTITY_INSERT [GuessWord] OFF; 
+GO
+
+SET IDENTITY_INSERT [Puzzle] ON;
+INSERT INTO [Puzzle] ([Id], [Name], [CreatedAt], [Difficulty], [Points], [RewardAmount], [ExpirationAt], [TriggerGroupId], [GuessWordId])
+VALUES (2, 'Example Puzzle 2', GETDATE(), 'Medium', 100, 5.0, '12-29-2024', 2, 2); 
+SET IDENTITY_INSERT [Puzzle] OFF;
+GO
+
+SET IDENTITY_INSERT [PuzzleTriggerWord] ON;
+INSERT INTO [PuzzleTriggerWord] ([Id], [PuzzleId], [TriggerWordId])
+VALUES
+    (5, 2, 5), -- football terms
+    (6, 2, 6), -- relating to a street
+    (7, 2, 7), -- duck
+    (8, 2, 8); -- garbage
+SET IDENTITY_INSERT [PuzzleTriggerWord] OFF; 
+GO
+
+SET IDENTITY_INSERT [PuzzlePuzzleWord] ON; 
+INSERT INTO [PuzzlePuzzleWord] ([Id], [PuzzleId], [PuzzleWordId])
+VALUES 
+    -- football's puzzle words
+    (17, 2, 17),
+    (18, 2, 18), 
+    (19, 2, 19),
+    (20, 2, 20),
+
+    -- street's puzzle words
+    (21, 2, 21),
+    (22, 2, 22),
+    (23, 2, 23),
+    (24, 2, 24),
+
+    -- duck's puzzle words
+    (25, 2, 25),
+    (26, 2, 26),
+    (27, 2, 27),
+    (28, 2, 28),
+
+    --garbage's puzzle words
+    (29, 2, 29),
+    (30, 2, 30),
+    (31, 2, 31),
+    (32, 2, 32);
+SET IDENTITY_INSERT [PuzzlePuzzleWord] OFF; 
+GO
