@@ -2,6 +2,8 @@
 using Blocklingo.Repositories;
 using Blocklingo.Models;
 
+//TODO some of these are temporary
+
 namespace Blocklingo.Controllers
 {
     [Route("api/[controller]")]
@@ -22,6 +24,27 @@ namespace Blocklingo.Controllers
             if (puzzle == null) return NotFound();
 
             return Ok(puzzle);
+        }
+
+        [HttpGet("{id}/details")]
+        public IActionResult GetDetails(int id) { 
+            
+            var puzzleDetails = _puzzleRepository.GetPuzzleDetailsById(id);
+
+            if (puzzleDetails == null) return NotFound();
+
+            return Ok(puzzleDetails);
+        }
+
+        [HttpGet("{id}/words")]
+        public IActionResult GetPuzzleWordsMap(int id)
+        {
+            var puzzleWordsMap = _puzzleRepository.GetOnlyTriggerAndPuzzleWordsById(id);
+
+            if (puzzleWordsMap  == null) return NotFound(); 
+
+            return Ok(puzzleWordsMap);
+
         }
     }
 }

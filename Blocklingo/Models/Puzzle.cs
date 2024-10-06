@@ -15,8 +15,8 @@ namespace Blocklingo.Models
         public int TriggerGroupId { get; set; } 
         public int GuessWordId { get; set;  }
 
-        public required List<string> TriggerWords { get; set; }
-        public required List<string> PuzzleWords { get; set; }
-        public string GuessWord { get; set; } = "";
+        //public required List<string> TriggerWords { get; set; }
+        //public required List<string> PuzzleWords { get; set; }
+        public GuessWord GuessWord { get; set; }
     }
 }

@@ -61,6 +61,8 @@ export default function useCreateConnection() {
       setConnectionGroup(selectedWords);
       setConnectionGuessGroup(connectionGuessGroup);
 
+      console.log("CGG", connectionGuessGroup);
+
       setIsLoading(false);
       setIsSuccess(true);
     } catch (error) {
