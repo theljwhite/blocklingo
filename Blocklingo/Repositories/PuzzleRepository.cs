@@ -73,8 +73,7 @@ namespace Blocklingo.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT p.*, gw.Word AS GuessWord, gw.Id as GuessWordId, 
-                               gw.CreatedAt AS GuessWordCreatedAt
+                        SELECT p.*, gw.Word AS GuessWord, gw.CreatedAt AS GuessWordCreatedAt
                         FROM Puzzle P
                         JOIN GuessWord gw ON p.GuessWordId = gw.Id
                         WHERE p.Id = @PuzzleId";
