@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity.Data;
 using Blocklingo.Repositories;
 using Blocklingo.Models; 
-using Microsoft.AspNetCore.Identity.Data;
 
 namespace Blocklingo.Controllers
 {

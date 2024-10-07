@@ -2,6 +2,7 @@ import {
   PUZZLE_BASE,
   PUZZLE_DETAILS_BY_ID,
   PUZZLE_WORDS_BY_ID,
+  PUZZLE_BEST_AVAIL_BY_USER_ID,
 } from "../constants/db";
 
 export type GuessWord = {
@@ -39,5 +40,9 @@ export const puzzleManager = {
 
     const puzzleWords = await response.json();
     return puzzleWords as Record<string, string[]>;
+  },
+  getBestAvailablePuzzlesByUserId: async (userId: number) => {
+    const response = await fetch(PUZZLE_BEST_AVAIL_BY_USER_ID(userId));
+    return (await response.json()) as Record<string, Puzzle[]>;
   },
 };

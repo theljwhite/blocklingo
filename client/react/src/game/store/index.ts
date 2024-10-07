@@ -104,7 +104,7 @@ export const useGameStore = create<GameState>((set, get) => {
     mistakes: STEP_DIFFICULTIES["Medium"][0].mistakes,
     didWin: false,
     isSoundOn: false,
-    isAdminMode: false,
+    isAdminMode: true,
     isResetting: false,
   };
 

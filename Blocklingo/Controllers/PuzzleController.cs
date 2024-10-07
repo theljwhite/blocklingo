@@ -26,7 +26,7 @@ namespace Blocklingo.Controllers
             return Ok(puzzle);
         }
 
-        [HttpGet("{id}/details")]
+        [HttpGet("details/{id}")]
         public IActionResult GetDetails(int id) { 
             
             var puzzleDetails = _puzzleRepository.GetPuzzleDetailsById(id);
@@ -36,7 +36,7 @@ namespace Blocklingo.Controllers
             return Ok(puzzleDetails);
         }
 
-        [HttpGet("{id}/words")]
+        [HttpGet("words/{id}")]
         public IActionResult GetPuzzleWordsMap(int id)
         {
             var puzzleWordsMap = _puzzleRepository.GetOnlyTriggerAndPuzzleWordsById(id);
@@ -45,6 +45,20 @@ namespace Blocklingo.Controllers
 
             return Ok(puzzleWordsMap);
 
+        }
+
+        [HttpGet("best/{userId}")]
+        public IActionResult GetBestAvailablePuzzles(int userId)
+        {
+            var unattempted = _puzzleRepository.GetAllUserUnattempted(userId);
+            var unsolved = _puzzleRepository.GetAllUserUnsolved(userId);
+
+            return Ok(new
+            {
+                unattempted,
+                unsolved
+            });
+            
         }
     }
 }

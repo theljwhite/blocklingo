@@ -68,7 +68,7 @@ export default function useCreateConnection() {
       setIsLoading(false);
       setIsSuccess(true);
     } catch (error) {
-      setError(0, { step: 0, message: "Failed to create connecitons board" });
+      setError(0, { step: 0, message: "Failed to create connections board" });
       toastError("Failed to create connections board.");
     }
   };
@@ -90,7 +90,7 @@ export default function useCreateConnection() {
       setConnectionGroup(connectionGroup);
       setConnectionGuessGroup(puzzleWords);
     } catch (error) {
-      setError(0, { step: 0, message: "Failed to create connecitons board" });
+      setError(0, { step: 0, message: "Failed to create connections board" });
       toastError("Failed to create connections board.");
     }
   };

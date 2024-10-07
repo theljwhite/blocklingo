@@ -64,6 +64,66 @@ namespace Blocklingo.Repositories
             }
         }
 
+        public List<Puzzle> GetAllUserUnattempted(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT p.*, gw.Word AS GuessWord, gw.CreatedAt AS GuessWordCreatedAt
+                        FROM Puzzle p
+                        JOIN GuessWord gw ON p.GuessWordId = gw.Id
+                        LEFT JOIN PuzzleAttempt pa ON p.Id = pa.PuzzleId AND pa.UserId = @UserId
+                        WHERE pa.PuzzleId IS NULL";
+                    DbUtils.AddParameter(cmd, "@UserId", userId);
+
+                    var reader = cmd.ExecuteReader();
+                    List<Puzzle> puzzles = [];
+
+                    while (reader.Read())
+                    {
+                        puzzles.Add(NewPuzzleFromReader(reader));   
+                    }
+
+                    reader.Close();
+                    return puzzles;
+                }
+            }
+        }
+
+        public List<Puzzle> GetAllUserUnsolved(int userId) {
+
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT p.*, gw.Word AS GuessWord, gw.CreatedAt AS GuessWordCreatedAt
+                        FROM Puzzle p
+                        JOIN GuessWord gw on p.GuessWordId = gw.Id
+                        JOIN PuzzleAttempt pa ON p.Id = pa.PuzzleId
+                        WHERE pa.UserId = @UserId AND pa.IsSolved = 0";
+                    DbUtils.AddParameter(cmd, "@UserId", userId);
+
+                    var reader = cmd.ExecuteReader();
+                    List<Puzzle> puzzles = [];
+
+                    while (reader.Read())
+                    {
+                        puzzles.Add(NewPuzzleFromReader(reader));
+                    }
+
+                    reader.Close();
+                    return puzzles;
+                }
+            }
+        }
+
         public Puzzle GetPuzzleDetailsById(int id)
         {
             using (var conn = Connection)

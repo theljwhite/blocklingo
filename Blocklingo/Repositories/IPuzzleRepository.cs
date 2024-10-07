@@ -6,6 +6,8 @@ namespace Blocklingo.Repositories
     {
         public Puzzle GetById(int id);
         public Puzzle GetPuzzleDetailsById(int id);
+        public List<Puzzle> GetAllUserUnattempted(int userId);
+        public List<Puzzle> GetAllUserUnsolved(int userId);
         public Dictionary<string, List<string>> GetOnlyTriggerAndPuzzleWordsById(int id);
     }
 }
