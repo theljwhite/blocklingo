@@ -1,5 +1,6 @@
 import { useGameStore } from "../store";
 import { useGameAudio } from "../store/AudioContext";
+import useDbPuzzle from "./useDbPuzzle";
 
 export default function useGuessConnection() {
   const {
@@ -18,6 +19,7 @@ export default function useGuessConnection() {
     setConnectionsStatus,
   } = useGameStore((state) => state);
   const { play: playSound } = useGameAudio();
+  const { createOrUpdateFailedPuzzleAttempt } = useDbPuzzle();
 
   const shuffle = (): void => {
     playSound("shuffle");
@@ -122,6 +124,7 @@ export default function useGuessConnection() {
           setConnectionBoard([]);
           setConnectionsStatus("Lost");
           playSound("lost");
+          createOrUpdateFailedPuzzleAttempt();
         }
 
         setUserIncorrectGuesses([]);

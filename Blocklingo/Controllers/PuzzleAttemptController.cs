@@ -17,7 +17,7 @@ namespace Blocklingo.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
             var puzzleAttempt = _puzzleAttemptRepository.GetById(id);
 
@@ -26,11 +26,20 @@ namespace Blocklingo.Controllers
             return Ok(puzzleAttempt);
         }
 
-        [HttpGet("/user/{userId}")]
+        [HttpGet("user/{userId}")]
         public IActionResult GetAllByUserId(int userId) { 
         
             var puzzleAttempts = _puzzleAttemptRepository.GetAllByUserId(userId);
             return Ok(puzzleAttempts);
+        }
+
+        [HttpGet("user/{userId}/puzzle/{puzzleId}")]
+        public IActionResult GetByPuzzleAndUserId(int puzzleId, int userId)
+        {
+            var puzzleAttempt = _puzzleAttemptRepository.GetByPuzzleAndUserId(puzzleId, userId);
+            if (puzzleAttempt == null) return NotFound();
+
+            return Ok(puzzleAttempt);
         }
 
         [HttpPost]
@@ -40,15 +49,23 @@ namespace Blocklingo.Controllers
             return CreatedAtAction("GetById", new {id =  puzzleAttempt.Id});
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, PuzzleAttempt puzzleAttempt) { 
+        [HttpPatch("{id}/increment")]
+        public IActionResult IncrementPuzzleTries(int id) {
+            
+            _puzzleAttemptRepository.IncrementTries(id);
+            return NoContent(); 
+        
+        }
+
+        [HttpPut("{id}/solve")]
+        public IActionResult SolvePuzzleAttempt(int id, PuzzleAttempt puzzleAttempt) { 
             
             if (id != puzzleAttempt.Id)
             {
                 return BadRequest();
             }
 
-            _puzzleAttemptRepository.Update(puzzleAttempt);
+            _puzzleAttemptRepository.Solve(puzzleAttempt);
 
             return NoContent();
 

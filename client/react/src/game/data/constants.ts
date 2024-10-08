@@ -7,3 +7,5 @@ export const CORRECT_GUESS_COLORS = [
   "#fbcfe8",
   "#99f6e4",
 ];
+export const CONNECTION_MISTAKES_POINTS_PENALTY = 10;
+export const CONTEXT_FAILED_GUESSES_POINTS_PENALTY = 1;

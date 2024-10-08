@@ -1,4 +1,6 @@
 import { create } from "zustand";
+import { type Puzzle } from "../../managers/puzzle-manager";
+import { type PuzzleAttempt } from "../../managers/puzzle-attempt-manager";
 
 export type GameError = {
   step: number;
@@ -27,9 +29,13 @@ export type CorrectGuess = {
 
 export type ConnectionsStatus = "Idle" | "Playing" | "Won" | "Lost";
 
+export type ContextGuess = {
+  word: string;
+  rankScore: number;
+};
+
 export interface GameState {
   isLoading: boolean;
-  isSuccess: boolean;
   errors: GameError[];
   step: number;
   furthestStep: number;
@@ -47,8 +53,11 @@ export interface GameState {
   isSoundOn: boolean;
   isAdminMode: boolean;
   isResetting: boolean;
+  puzzleDetails: Puzzle | null;
+  contextTargetWord: string;
+  contextGuesses: ContextGuess[];
+  puzzleAttempt: PuzzleAttempt | null;
   setIsLoading: (isLoading: boolean) => void;
-  setIsSuccess: (isSuccess: boolean) => void;
   setError: (step: number, error: GameError) => void;
   setStep: (step: number) => void;
   setFurthestStep: (furthestStep: number) => void;
@@ -66,6 +75,10 @@ export interface GameState {
   setIsSoundOn: (isSoundOn: boolean) => void;
   setIsAdminMode: (isAdminMode: boolean) => void;
   setIsResetting: (isResetting: boolean) => void;
+  setPuzzleDetails: (puzzleDetails: Puzzle | null) => void;
+  setContextTargetWord: (contextTargetWord: string) => void;
+  setContextGuesses: (contextGuesses: ContextGuess[]) => void;
+  setPuzzleAttempt: (puzzleAttempt: PuzzleAttempt) => void;
   resetStep: () => void;
   reset: () => void;
 }
@@ -88,7 +101,6 @@ export const STEP_DIFFICULTIES: StepDifficulties = {
 export const useGameStore = create<GameState>((set, get) => {
   const initialGameState = {
     isLoading: false,
-    isSuccess: false,
     errors: [],
     step: 0,
     furthestStep: 0,
@@ -104,14 +116,17 @@ export const useGameStore = create<GameState>((set, get) => {
     mistakes: STEP_DIFFICULTIES["Medium"][0].mistakes,
     didWin: false,
     isSoundOn: false,
-    isAdminMode: true,
+    isAdminMode: false,
     isResetting: false,
+    puzzleDetails: null,
+    contextTargetWord: "",
+    contextGuesses: [],
+    puzzleAttempt: null,
   };
 
   return {
     ...initialGameState,
     setIsLoading: (isLoading: boolean) => set({ isLoading }),
-    setIsSuccess: (isSuccess: boolean) => set({ isSuccess }),
     setError: (step: number, error: GameError) => {
       let errorsCopy = [...get().errors];
       errorsCopy = errorsCopy.filter((error) => error.step !== step);
@@ -140,6 +155,13 @@ export const useGameStore = create<GameState>((set, get) => {
     setIsSoundOn: (isSoundOn: boolean) => set({ isSoundOn }),
     setIsAdminMode: (isAdminMode: boolean) => set({ isAdminMode }),
     setIsResetting: (isResetting: boolean) => set({ isResetting }),
+    setPuzzleDetails: (puzzleDetails: Puzzle | null) => set({ puzzleDetails }),
+    setContextTargetWord: (contextTargetWord: string) =>
+      set({ contextTargetWord }),
+    setContextGuesses: (contextGuesses: ContextGuess[]) =>
+      set({ contextGuesses }),
+    setPuzzleAttempt: (puzzleAttempt: PuzzleAttempt | null) =>
+      set({ puzzleAttempt }),
     reset: () => set({ ...initialGameState }),
     resetStep: () =>
       set({

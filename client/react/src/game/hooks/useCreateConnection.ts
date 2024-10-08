@@ -1,21 +1,19 @@
 import { useGameStore } from "../store";
-import { api } from "../../managers/api";
+import useDbPuzzle from "./useDbPuzzle";
 import { triggerWords } from "../data/words/connections";
 import { getTriggerWordsFromQuery } from "../logic/similar-words";
 import { toastError } from "../../components/UI/Toast/Toast";
 
-//TODO - update createConnectionsBoardDb so that it chooses from multiple,
-//puzzle possibilities and not by one id
-
 export default function useCreateConnection() {
   const {
     setIsLoading,
-    setIsSuccess,
     setError,
     setConnectionBoard,
     setConnectionGroup,
     setConnectionGuessGroup,
   } = useGameStore((state) => state);
+
+  const { getAndSetDbPuzzle } = useDbPuzzle();
 
   const shuffleArray = (arr: any[]): any[] => {
     return arr.sort(() => Math.random() - 0.5);
@@ -66,21 +64,25 @@ export default function useCreateConnection() {
       setConnectionGuessGroup(connectionGuessGroup);
 
       setIsLoading(false);
-      setIsSuccess(true);
     } catch (error) {
-      setError(0, { step: 0, message: "Failed to create connections board" });
-      toastError("Failed to create connections board.");
+      setIsLoading(false);
+      setError(0, {
+        step: 0,
+        message: "Failed to create dynamic connections board.",
+      });
+      toastError("Failed to create connections board.", true);
     }
   };
 
-  const createConnectionsBoardDb = async (puzzleId: number): Promise<void> => {
+  const createConnectionsBoardDb = async (): Promise<void> => {
+    setIsLoading(true);
     try {
-      const puzzleWords = await api.puzzle.getPuzzleWordsById(puzzleId);
+      const dbPuzzle = await getAndSetDbPuzzle();
 
-      if (!puzzleWords) throw new Error();
+      if (!dbPuzzle) throw new Error();
 
-      const connectionGroup = Object.keys(puzzleWords);
-      const boardWords = Object.values(puzzleWords).flat();
+      const connectionGroup = Object.keys(dbPuzzle.words);
+      const boardWords = Object.values(dbPuzzle.words).flat();
 
       const shuffledWords = shuffleArray(
         boardWords.map((word) => ({ word, selected: false }))
@@ -88,10 +90,13 @@ export default function useCreateConnection() {
 
       setConnectionBoard(shuffledWords);
       setConnectionGroup(connectionGroup);
-      setConnectionGuessGroup(puzzleWords);
+      setConnectionGuessGroup(dbPuzzle.words);
+
+      setIsLoading(false);
     } catch (error) {
-      setError(0, { step: 0, message: "Failed to create connections board" });
-      toastError("Failed to create connections board.");
+      setIsLoading(false);
+      setError(0, { step: 0, message: "Failed to create connections board." });
+      toastError("Failed to create connections board.", true);
     }
   };
 

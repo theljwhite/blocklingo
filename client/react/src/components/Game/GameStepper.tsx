@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useGameStore } from "../../game/store";
+import { useSession } from "../../managers/auth/useSession";
 import useCreateConnection from "../../game/hooks/useCreateConnection";
 import useDifficulties from "../../game/hooks/useDifficulties";
 import GameLoading from "./GameLoading";
+import GameError from "./GameError";
 import GameConnectionsBoard from "./GameConnectionsBoard";
 import GameContextBoard from "./GameContextBoard";
 
@@ -43,10 +45,11 @@ export default function GameStepper() {
   const { getDifficultySettings } = useDifficulties();
   const { createConnectionsBoard, createConnectionsBoardDb } =
     useCreateConnection();
+  const { session } = useSession();
 
   useEffect(() => {
-    initializeStep();
-  }, []);
+    if (session.user?.id) initializeStep();
+  }, [session.user?.id]);
 
   useEffect(() => {
     if (isResetting) initializeStep();
@@ -70,8 +73,8 @@ export default function GameStepper() {
     const fetchDataForStep = async (): Promise<void> => {
       if (step === 0) {
         return isAdminMode
-          ? await createConnectionsBoardDb(1)
-          : await createConnectionsBoard(used, wordLimit);
+          ? await createConnectionsBoard(used, wordLimit)
+          : await createConnectionsBoardDb();
       }
 
       if (step === 1) {
@@ -84,5 +87,6 @@ export default function GameStepper() {
   };
 
   if (isLoading) return <GameLoading />;
+  if (errors.length > 0) return <GameError />;
   return gameSteps[step].content;
 }

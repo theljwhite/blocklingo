@@ -120,8 +120,12 @@ CREATE TABLE [PuzzleAttempt] (
 [Tries] integer, 
 [IsSolved] bit NOT NULL, 
 [EarnedPoints] integer,
+[Mistakes] integer, 
+[Guesses] integer, 
 [UserId] integer NOT NULL, 
-[PuzzleId] integer NOT NULL
+[PuzzleId] integer NOT NULL,
+[CreatedAt] datetime NOT NULL,
+[UpdatedAt] datetime
 )
 GO
 

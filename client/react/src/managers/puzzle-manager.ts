@@ -4,6 +4,7 @@ import {
   PUZZLE_WORDS_BY_ID,
   PUZZLE_BEST_AVAIL_BY_USER_ID,
 } from "../constants/db";
+import { type Difficulty } from "../game/store";
 
 export type GuessWord = {
   id: number;
@@ -15,7 +16,7 @@ export type Puzzle = {
   id: number;
   name: string;
   createdAt: Date;
-  difficulty: string; //string for now
+  difficulty: Difficulty;
   points: number;
   rewardAmount: number;
   expirationAt: Date;

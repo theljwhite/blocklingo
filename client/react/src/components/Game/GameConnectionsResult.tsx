@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { type CorrectGuess, useGameStore } from "../../game/store";
 import { motion } from "framer-motion";
 import {
@@ -11,8 +12,6 @@ import {
   CONNECTION_BOARD_WIDTH,
   CORRECT_GUESS_COLORS,
 } from "../../game/data/constants";
-
-import { useEffect } from "react";
 import { doConfetti, doSadConfetti } from "../../game/data/misc/particles";
 
 export default function GameConnectionsResult() {

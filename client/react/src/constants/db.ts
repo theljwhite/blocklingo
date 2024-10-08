@@ -18,3 +18,13 @@ export const PUZZLE_ATTEMPT_BY_ID = (id: number) =>
   `${PUZZLE_ATTEMPT_BASE}/${id}`;
 export const PUZZLE_ATTEMPTS_BY_USER_ID = (userId: number) =>
   `${PUZZLE_ATTEMPT_BASE}/user/${userId}`;
+
+export const PUZZLE_ATTEMPT_BY_USER_AND_PUZZLE = (
+  puzzleId: number,
+  userId: number
+) => `${PUZZLE_ATTEMPT_BASE}/user/${userId}/puzzle/${puzzleId}`;
+
+export const PUZZLE_ATTEMPT_SOLVE = (id: number) =>
+  `${PUZZLE_ATTEMPT_BASE}/${id}/solve`;
+export const PUZZLE_ATTEMPT_INCREMENT_TRIES = (id: number) =>
+  `${PUZZLE_ATTEMPT_BASE}/${id}/increment`;

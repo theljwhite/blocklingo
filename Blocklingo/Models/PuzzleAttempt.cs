@@ -9,8 +9,12 @@ namespace Blocklingo.Models
         public int Tries { get; set; }
         public bool IsSolved { get; set; }
         public int EarnedPoints { get; set; }
+        public int? Mistakes { get; set; }
+        public int? Guesses { get; set; }
         public int UserId { get; set; }
         public int PuzzleId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
     }
 }
