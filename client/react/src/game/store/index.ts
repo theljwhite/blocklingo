@@ -32,6 +32,7 @@ export type ConnectionsStatus = "Idle" | "Playing" | "Won" | "Lost";
 export type ContextGuess = {
   word: string;
   rankScore: number;
+  selected?: boolean;
 };
 
 export interface GameState {
@@ -55,7 +56,11 @@ export interface GameState {
   isResetting: boolean;
   puzzleDetails: Puzzle | null;
   contextTargetWord: string;
+  contextCurrentGuess: string;
   contextGuesses: ContextGuess[];
+  contextCurrentGuessObj: ContextGuess | null;
+  contextTargetWordEmbeddings: number[];
+  isCalculating: boolean;
   puzzleAttempt: PuzzleAttempt | null;
   setIsLoading: (isLoading: boolean) => void;
   setError: (step: number, error: GameError) => void;
@@ -78,6 +83,14 @@ export interface GameState {
   setPuzzleDetails: (puzzleDetails: Puzzle | null) => void;
   setContextTargetWord: (contextTargetWord: string) => void;
   setContextGuesses: (contextGuesses: ContextGuess[]) => void;
+  setContextCurrentGuess: (contextCurrentGuess: string) => void;
+  setContextTargetWordEmbeddings: (
+    contextTargetWordEmbeddings: number[]
+  ) => void;
+  setContextCurrentGuessObj: (
+    contextCurrentGuessObj: ContextGuess | null
+  ) => void;
+  setIsCalculating: (isCalculating: boolean) => void;
   setPuzzleAttempt: (puzzleAttempt: PuzzleAttempt) => void;
   resetStep: () => void;
   reset: () => void;
@@ -102,7 +115,7 @@ export const useGameStore = create<GameState>((set, get) => {
   const initialGameState = {
     isLoading: false,
     errors: [],
-    step: 0,
+    step: 1,
     furthestStep: 0,
     isLightMode: false,
     connectionBoard: [],
@@ -119,8 +132,12 @@ export const useGameStore = create<GameState>((set, get) => {
     isAdminMode: false,
     isResetting: false,
     puzzleDetails: null,
-    contextTargetWord: "",
+    contextTargetWord: "bacon",
+    contextCurrentGuess: "",
+    contextCurrentGuessObj: null,
     contextGuesses: [],
+    contextTargetWordEmbeddings: [],
+    isCalculating: false,
     puzzleAttempt: null,
   };
 
@@ -160,6 +177,13 @@ export const useGameStore = create<GameState>((set, get) => {
       set({ contextTargetWord }),
     setContextGuesses: (contextGuesses: ContextGuess[]) =>
       set({ contextGuesses }),
+    setContextCurrentGuess: (contextCurrentGuess: string) =>
+      set({ contextCurrentGuess }),
+    setContextCurrentGuessObj: (contextCurrentGuessObj: ContextGuess | null) =>
+      set({ contextCurrentGuessObj }),
+    setContextTargetWordEmbeddings: (contextTargetWordEmbeddings: number[]) =>
+      set({ contextTargetWordEmbeddings }),
+    setIsCalculating: (isCalculating: boolean) => set({ isCalculating }),
     setPuzzleAttempt: (puzzleAttempt: PuzzleAttempt | null) =>
       set({ puzzleAttempt }),
     reset: () => set({ ...initialGameState }),

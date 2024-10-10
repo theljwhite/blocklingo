@@ -7,11 +7,9 @@ export default function useGameStep() {
     furthestStep,
     setStep,
     setFurthestStep,
-    setIsLoading,
   } = useGameStore((state) => state);
 
   const handleStepClick = (index: number): void => {
-    setIsLoading(true);
     if (index < currStep) {
       setStep(index);
       return;

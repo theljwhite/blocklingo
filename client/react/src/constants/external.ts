@@ -10,3 +10,6 @@ export const DATAMUSE_WORDS_HYPERNYMS = `${DATAMUSE_BASE}/words?rel_spc=`;
 export const DATAMUSE_WORDS_MORE_GENERAL = `${DATAMUSE_BASE}/words?rel_gen=`;
 export const DATAMUSE_WORDS_NOUN_TO_ADJ = `${DATAMUSE_BASE}/words?rel_jjb=`;
 export const DATAMUSE_WORDS_TRIGGER_WORDS = `${DATAMUSE_BASE}/words?rel_trg=`;
+
+export const OPEN_AI_EMBEDDINGS = "https://api.openai.com/v1/embeddings";
+export const HUGGING_FACE_BASE = "https://api-inference.huggingface.co/models";

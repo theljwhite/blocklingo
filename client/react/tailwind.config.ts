@@ -22,6 +22,8 @@ export default {
           2: "#F7B974",
           3: "#D1A4FA",
           4: "#CDFAA4",
+          5: "#B974F7",
+          6: "#F7B974",
         },
         secondary: {
           1: "#604cfc",

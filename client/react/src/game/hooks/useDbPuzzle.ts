@@ -23,6 +23,7 @@ export default function useDbPuzzle() {
     isAdminMode,
     setPuzzleDetails,
     setPuzzleAttempt,
+    setContextTargetWord,
   } = useGameStore((state) => state);
   const { getDifficultySettings } = useDifficulties();
   const { session } = useSession();
@@ -49,6 +50,7 @@ export default function useDbPuzzle() {
     if (!puzzleWords) return null;
 
     setPuzzleDetails(puzzle);
+    setContextTargetWord(puzzle.guessWord.word);
 
     const existingPuzzleAttempt =
       await api.puzzleAttempt.getByPuzzleIdAndUserId(
@@ -104,7 +106,7 @@ export default function useDbPuzzle() {
         isSolved: true,
         userId: session?.user?.id ?? 0,
         puzzleId: puzzleDetails?.id ?? 0,
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date(),
         earnedPoints,
       };
 
