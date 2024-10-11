@@ -28,11 +28,13 @@ export type CorrectGuess = {
 };
 
 export type ConnectionsStatus = "Idle" | "Playing" | "Won" | "Lost";
+export type ContextGameStatus = "Playing" | "Won" | "Lost" | "Forfeit";
 
 export type ContextGuess = {
   word: string;
   rankScore: number;
   selected?: boolean;
+  animate?: boolean;
 };
 
 export interface GameState {
@@ -50,7 +52,6 @@ export interface GameState {
   userIncorrectGuesses: string[];
   correctGuesses: CorrectGuess[];
   mistakes: number;
-  didWin: boolean;
   isSoundOn: boolean;
   isAdminMode: boolean;
   isResetting: boolean;
@@ -60,6 +61,7 @@ export interface GameState {
   contextGuesses: ContextGuess[];
   contextCurrentGuessObj: ContextGuess | null;
   contextTargetWordEmbeddings: number[];
+  contextGameStatus: ContextGameStatus;
   isCalculating: boolean;
   puzzleAttempt: PuzzleAttempt | null;
   setIsLoading: (isLoading: boolean) => void;
@@ -68,7 +70,6 @@ export interface GameState {
   setFurthestStep: (furthestStep: number) => void;
   setIsLightMode: (isLightMode: boolean) => void;
   setMistakes: (connectionMistakes: number) => void;
-  setDidWin: (didWin: boolean) => void;
   setConnectionBoard: (board: ConnectionItem[]) => void;
   setConnectionGroup: (group: string[]) => void;
   setConnectionGuessGroup: (guessGroup: Record<string, string[]>) => void;
@@ -90,6 +91,7 @@ export interface GameState {
   setContextCurrentGuessObj: (
     contextCurrentGuessObj: ContextGuess | null
   ) => void;
+  setContextGameStatus: (contextGameStatus: ContextGameStatus) => void;
   setIsCalculating: (isCalculating: boolean) => void;
   setPuzzleAttempt: (puzzleAttempt: PuzzleAttempt) => void;
   resetStep: () => void;
@@ -115,7 +117,7 @@ export const useGameStore = create<GameState>((set, get) => {
   const initialGameState = {
     isLoading: false,
     errors: [],
-    step: 1,
+    step: 0,
     furthestStep: 0,
     isLightMode: false,
     connectionBoard: [],
@@ -127,16 +129,16 @@ export const useGameStore = create<GameState>((set, get) => {
     correctGuesses: [],
     difficulty: "Medium" as Difficulty,
     mistakes: STEP_DIFFICULTIES["Medium"][0].mistakes,
-    didWin: false,
     isSoundOn: false,
     isAdminMode: false,
     isResetting: false,
     puzzleDetails: null,
-    contextTargetWord: "bacon",
+    contextTargetWord: "",
     contextCurrentGuess: "",
     contextCurrentGuessObj: null,
     contextGuesses: [],
     contextTargetWordEmbeddings: [],
+    contextGameStatus: "Playing" as ContextGameStatus,
     isCalculating: false,
     puzzleAttempt: null,
   };
@@ -153,7 +155,6 @@ export const useGameStore = create<GameState>((set, get) => {
     setStep: (step: number) => set({ step }),
     setFurthestStep: (furthestStep: number) => set({ furthestStep }),
     setIsLightMode: (isLightMode: boolean) => set({ isLightMode }),
-    setDidWin: (didWin: boolean) => set({ didWin }),
     setConnectionBoard: (connectionBoard: ConnectionItem[]) =>
       set({ connectionBoard }),
     setConnectionGroup: (connectionGroup: string[]) => set({ connectionGroup }),
@@ -183,6 +184,8 @@ export const useGameStore = create<GameState>((set, get) => {
       set({ contextCurrentGuessObj }),
     setContextTargetWordEmbeddings: (contextTargetWordEmbeddings: number[]) =>
       set({ contextTargetWordEmbeddings }),
+    setContextGameStatus: (contextGameStatus: ContextGameStatus) =>
+      set({ contextGameStatus }),
     setIsCalculating: (isCalculating: boolean) => set({ isCalculating }),
     setPuzzleAttempt: (puzzleAttempt: PuzzleAttempt | null) =>
       set({ puzzleAttempt }),

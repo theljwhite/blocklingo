@@ -4,13 +4,9 @@ import {
 } from "../../constants/external";
 import { CONTEXT_WORST_SIMILARITY_SCORE } from "../data/constants";
 
-//TODO - clean this up, better calculate score
-
 export const getEmbeddings = async (word: string): Promise<number[] | null> => {
   const payload = {
     input: word,
-    // model: "text-embedding-ada-002",
-    // model: "text-embedding-3-small",
     model: "text-embedding-3-large",
   };
 

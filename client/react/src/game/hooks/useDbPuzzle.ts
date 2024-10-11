@@ -100,13 +100,12 @@ export default function useDbPuzzle() {
 
       const updatedAttempt: Partial<PuzzleAttempt> = {
         id: puzzleAttempt.id,
-        completionTimeSeconds: null, //TODO if I can get to this
+        completionTimeSeconds: 0, //TODO if I can get to this
         guesses: contextGuesses.length,
         mistakes: connectionsMistakesCount,
         isSolved: true,
         userId: session?.user?.id ?? 0,
         puzzleId: puzzleDetails?.id ?? 0,
-        updatedAt: new Date(),
         earnedPoints,
       };
 
@@ -114,6 +113,22 @@ export default function useDbPuzzle() {
     } catch (error) {
       console.error("TODO: error handle", error);
     }
+  };
+
+  const getEarnedPoints = (): number => {
+    const { points: totalPointsPossible, difficulty } = puzzleDetails ?? {};
+    const contextFailedGuessesCount = contextGuesses.length - 1;
+
+    const difficultySettings = getDifficultySettings(difficulty ?? "Medium");
+
+    const connectionsMistakesCount = difficultySettings.mistakes - mistakes;
+
+    const earnedPoints = calculatePointsEarned(
+      totalPointsPossible ?? 0,
+      contextFailedGuessesCount,
+      connectionsMistakesCount
+    );
+    return earnedPoints;
   };
 
   const chooseRandomPuzzle = (puzzles: Puzzle[]): Puzzle => {
@@ -124,5 +139,6 @@ export default function useDbPuzzle() {
     getAndSetDbPuzzle,
     createOrUpdateFailedPuzzleAttempt,
     updateSolvedPuzzleAttempt,
+    getEarnedPoints,
   };
 }

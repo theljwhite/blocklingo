@@ -1,5 +1,6 @@
 import { useGameStore } from "../store";
 import { useGameAudio } from "../store/AudioContext";
+import useDbPuzzle from "./useDbPuzzle";
 import {
   getEmbeddings,
   compareEmbeddingsGiveScore,
@@ -7,10 +8,10 @@ import {
   getScoreFromSimilarity,
 } from "../logic/embeddings";
 import { WORD_STEM_REPLACE } from "../../constants/regex";
+import { CONTEXT_INCORRECT_GUESSES_ALLOWED } from "../data/constants";
 import { toastError } from "../../components/UI/Toast/Toast";
 
-//TODO - all of these funcs wont be needed when a method of getting the similarities between words,
-//is determined 100%
+//NOTE - these bottom 2 funcs are prob not needed anymore, but keeping just in case.
 
 export default function useContextGame() {
   const {
@@ -19,16 +20,111 @@ export default function useContextGame() {
     contextGuesses,
     contextTargetWordEmbeddings,
     setContextTargetWordEmbeddings,
+    isAdminMode,
     step,
     setContextGuesses,
     setContextCurrentGuess,
     setContextCurrentGuessObj,
+    setContextGameStatus,
     setIsLoading,
     setIsCalculating,
     setError,
   } = useGameStore((state) => state);
 
   const { play: playSound } = useGameAudio();
+  const { createOrUpdateFailedPuzzleAttempt, updateSolvedPuzzleAttempt } =
+    useDbPuzzle();
+
+  const getGuessSimilarityAndUpdate = async (): Promise<void> => {
+    playSound("loading");
+    setIsCalculating(true);
+
+    const userGuess = contextCurrentGuess.trim().toLowerCase();
+    const targetWord = contextTargetWord.toLowerCase();
+
+    try {
+      const cosineSimilarity = await getSimilaritiesDirect(
+        targetWord,
+        userGuess
+      );
+
+      console.info("SIMILARITY WAS:", cosineSimilarity);
+
+      if (!cosineSimilarity) throw new Error();
+
+      const similarityScore = getScoreFromSimilarity(cosineSimilarity);
+
+      const newGuess = {
+        word: userGuess,
+        rankScore: similarityScore,
+        animate: userGuess === targetWord,
+      };
+
+      const updatedGuesses = [...contextGuesses, newGuess]
+        .sort((a, b) => a.rankScore - b.rankScore)
+        .map((guess) => ({
+          ...guess,
+          selected: guess.word.toLowerCase() === userGuess,
+          animate: guess.word === targetWord,
+        }));
+
+      setContextGuesses(updatedGuesses);
+      setContextCurrentGuess("");
+      setContextCurrentGuessObj(newGuess);
+
+      setIsCalculating(false);
+      playSound("select");
+
+      handleGameStatusChange(userGuess, targetWord);
+    } catch (error) {
+      toastError("External API issue. Try your guess again.");
+    }
+  };
+
+  const isWordGuessed = (userGuess: string): boolean => {
+    const stemmedGuess = WORD_STEM_REPLACE(userGuess.toLowerCase());
+
+    const isAlreadyGuessed = contextGuesses.some(
+      (guess) => WORD_STEM_REPLACE(guess.word.toLowerCase()) === stemmedGuess
+    );
+
+    if (isAlreadyGuessed) {
+      const highlightedGuessedWord = contextGuesses.map((guess) => ({
+        ...guess,
+        selected: WORD_STEM_REPLACE(guess.word.toLowerCase()) === stemmedGuess,
+      }));
+
+      playSound("error_short");
+      toastError("You already guessed this word.", true);
+      setContextGuesses(highlightedGuessedWord);
+    }
+
+    return isAlreadyGuessed;
+  };
+
+  const handleGameStatusChange = async (
+    userGuess: string,
+    targetWord: string
+  ): Promise<void> => {
+    if (userGuess === targetWord) {
+      playSound("bell");
+      await updateSolvedPuzzleAttempt();
+
+      setTimeout(() => {
+        playSound("win_long");
+        setContextGameStatus("Won");
+      }, 1000);
+    }
+
+    if (
+      !isAdminMode &&
+      contextGuesses.length >= CONTEXT_INCORRECT_GUESSES_ALLOWED
+    ) {
+      playSound("lost");
+      setContextGameStatus("Lost");
+      await createOrUpdateFailedPuzzleAttempt();
+    }
+  };
 
   const initContextGame = async (): Promise<void> => {
     try {
@@ -57,10 +153,6 @@ export default function useContextGame() {
 
     if (userGuess === targetWord) {
       playSound("won");
-
-      //TODO
-      console.log(`You won the game. Secret word: ${targetWord}`);
-      // return;
     }
 
     setIsCalculating(true);
@@ -93,77 +185,10 @@ export default function useContextGame() {
     }
   };
 
-  const getGuessSimilarityAndUpdate = async (): Promise<void> => {
-    playSound("select");
-    setIsCalculating(true);
-
-    const userGuess = contextCurrentGuess.trim().toLowerCase();
-    const targetWord = contextTargetWord.toLowerCase();
-
-    if (userGuess === targetWord) {
-      playSound("won");
-
-      console.log(`You won the game. Secret word: ${contextTargetWord}`);
-    }
-    try {
-      const cosineSimilarity = await getSimilaritiesDirect(
-        targetWord,
-        userGuess
-      );
-
-      console.log("SIMILARITY WAS:", cosineSimilarity);
-
-      if (!cosineSimilarity) throw new Error();
-
-      const similarityScore = getScoreFromSimilarity(cosineSimilarity);
-
-      const newGuess = {
-        word: userGuess,
-        rankScore: similarityScore,
-      };
-
-      const updatedGuesses = [...contextGuesses, newGuess]
-        .sort((a, b) => a.rankScore - b.rankScore)
-        .map((guess) => ({ ...guess, selected: false }));
-
-      setContextGuesses(updatedGuesses);
-      setContextCurrentGuess("");
-      setContextCurrentGuessObj(newGuess);
-
-      setIsCalculating(false);
-    } catch (error) {
-      toastError("External API issue. Try your guess again.");
-    }
-  };
-
-  const wordIsGuessed = (userGuess: string): boolean => {
-    const stemmedGuess = WORD_STEM_REPLACE(userGuess.toLowerCase());
-
-    const isAlreadyGuessed = contextGuesses.some(
-      (guess) => WORD_STEM_REPLACE(guess.word.toLowerCase()) === stemmedGuess
-    );
-
-    if (isAlreadyGuessed) {
-      const highlightedGuessedWord = contextGuesses.map((guess) =>
-        WORD_STEM_REPLACE(guess.word.toLowerCase()) === stemmedGuess
-          ? {
-              ...guess,
-              selected: true,
-            }
-          : guess
-      );
-
-      toastError("You already guessed this word.", true);
-      setContextGuesses(highlightedGuessedWord);
-    }
-
-    return isAlreadyGuessed;
-  };
-
   return {
     initContextGame,
     getGuessEmbeddingAndUpdate,
-    wordIsGuessed,
+    isWordGuessed,
     getGuessSimilarityAndUpdate,
   };
 }

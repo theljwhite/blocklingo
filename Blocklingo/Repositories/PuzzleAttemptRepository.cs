@@ -71,7 +71,7 @@ namespace Blocklingo.Repositories
                             EarnedPoints = @EarnedPoints,
                             Mistakes = @Mistakes,
                             Guesses = @Guesses, 
-                            UpdatedAt = @UpdatedAt
+                            UpdatedAt = GETDATE()
                         WHERE Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", puzzleAttempt.Id);
@@ -79,7 +79,6 @@ namespace Blocklingo.Repositories
                     DbUtils.AddParameter(cmd, "@EarnedPoints", puzzleAttempt.EarnedPoints);
                     DbUtils.AddParameter(cmd, "@Mistakes", puzzleAttempt.Mistakes);
                     DbUtils.AddParameter(cmd, "@Guesses", puzzleAttempt.Guesses);
-                    DbUtils.AddParameter(cmd, "@UpdatedAt", DateTime.Now);
 
                     cmd.ExecuteNonQuery();
                 }

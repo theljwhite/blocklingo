@@ -1,4 +1,4 @@
-//In case I make more games for this than just 1, they can share the same container.
+import { getCurrDateMonthDDYYYY } from "../../../helpers/date-time";
 
 interface GameContainerProps {
   toolbar: JSX.Element;
@@ -18,7 +18,7 @@ export default function LayoutGameContainer({
               {import.meta.env.VITE_PROJECT_NAME}
             </span>
             <span className="text-2xl font-second text-neutral-23 font-thin tracking-tight">
-              September 25, 2024
+              {getCurrDateMonthDDYYYY(new Date())}
             </span>
           </h1>
         </div>

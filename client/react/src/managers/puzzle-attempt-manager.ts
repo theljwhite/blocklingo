@@ -47,10 +47,16 @@ export const puzzleAttemptManager = {
     return response;
   },
   solve: async (puzzleAttempt: Partial<PuzzleAttempt>) => {
+    //unchanged values still passed to request to satisfy Swagger for now
+    const unchangedValues = {
+      tries: 0,
+      updatedAt: new Date(),
+      createdAt: new Date(),
+    };
     const response = await fetch(PUZZLE_ATTEMPT_SOLVE(puzzleAttempt.id ?? 0), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(puzzleAttempt),
+      body: JSON.stringify({ ...unchangedValues, ...puzzleAttempt }),
     });
     return response;
   },

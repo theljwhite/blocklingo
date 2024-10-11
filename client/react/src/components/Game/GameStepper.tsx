@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useGameStore } from "../../game/store";
 import { useSession } from "../../managers/auth/useSession";
 import useCreateConnection from "../../game/hooks/useCreateConnection";
-import useContextGame from "../../game/hooks/useContextGame";
 import useDifficulties from "../../game/hooks/useDifficulties";
 import GameLoading from "./GameLoading";
 import GameError from "./GameError";
@@ -46,7 +45,6 @@ export default function GameStepper() {
   const { getDifficultySettings } = useDifficulties();
   const { createConnectionsBoard, createConnectionsBoardDb } =
     useCreateConnection();
-  const { initContextGame } = useContextGame();
 
   const { session } = useSession();
 
@@ -57,11 +55,6 @@ export default function GameStepper() {
   useEffect(() => {
     if (isResetting) initializeStep();
   }, [isResetting, step, isAdminMode]);
-
-  useEffect(() => {
-    console.log("ONLY STEP useEffect exec");
-    initializeStep();
-  }, [step]);
 
   const initializeStep = async (): Promise<void> => {
     const difficultySettings = getDifficultySettings(difficulty);
@@ -85,11 +78,7 @@ export default function GameStepper() {
           : await createConnectionsBoardDb();
       }
 
-      if (step === 1) {
-        console.log("STEP 1 exec'd");
-        //TODO - if embeddings are used this needs to run, otherwise it doesnt.
-        // return await initContextGame();
-      }
+      //TODO other steps where init data is needed go here
     };
 
     await fetchDataForStep();
