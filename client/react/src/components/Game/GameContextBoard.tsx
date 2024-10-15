@@ -10,6 +10,8 @@ import {
   correctGuessAnimation,
   correctGuessTransition,
 } from "../../game/data/animations/connections";
+import { contextInputVariant } from "../../game/data/animations/context-board";
+import { textLeftToRightVariant } from "../../game/data/animations/dialog";
 import { REGEX_ONLY_ALPHABET } from "../../constants/regex";
 import GamePuzzleResult from "./GamePuzzleResult";
 import { SvgProjectLogo } from "../UI/Icons/index";
@@ -32,7 +34,10 @@ export default function GameContextBoard() {
   } = useGameStore((state) => state);
 
   const { getGuessSimilarityAndUpdate, isWordGuessed } = useContextGame();
+
   const showResults = contextGameStatus !== "Playing";
+  const instructionTextArr =
+    "Enter a word above to guess for the secret!".split(" ");
 
   const handleGuessSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -114,7 +119,12 @@ export default function GameContextBoard() {
                 </span>
               </div>
               <form onSubmit={handleGuessSubmit} className="min-w-[500px]">
-                <div className="relative">
+                <motion.div
+                  initial="closed"
+                  animate="open"
+                  variants={contextInputVariant}
+                  className="relative"
+                >
                   <div
                     className={`${
                       isGuessValid ? "border-neutral-22" : "border-error-1"
@@ -131,13 +141,13 @@ export default function GameContextBoard() {
                       autoCapitalize="off"
                       id="context-guess-entry"
                       type="text"
-                      placeholder="guess a word"
+                      placeholder="type a word"
                       className="bg-neutral-12 block w-full text-md pt-2 pb-2 pr-2 text-white outline-none"
                       value={contextCurrentGuess}
                       onChange={onGuessChange}
                     />
                   </div>
-                </div>
+                </motion.div>
               </form>
               <div className="flex flex-col min-h-[50px] justify-center my-10">
                 {isCalculating ? (
@@ -190,7 +200,18 @@ export default function GameContextBoard() {
                   </motion.div>
                 ) : (
                   <div className="px-1.5">
-                    Enter a word above to guess for the secret!
+                    {instructionTextArr.map((word, index) => {
+                      return (
+                        <motion.span
+                          initial="inactive"
+                          animate="active"
+                          variants={textLeftToRightVariant(index, 0.3)}
+                          key={index}
+                        >
+                          {word}{" "}
+                        </motion.span>
+                      );
+                    })}
                   </div>
                 )}
               </div>

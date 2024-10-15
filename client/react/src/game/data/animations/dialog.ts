@@ -31,3 +31,18 @@ export const oldModalVariants = {
     },
   },
 };
+
+export const textLeftToRightVariant = (index: number, duration: number) => {
+  return {
+    active: {
+      opacity: 1,
+      transition: {
+        duration,
+        delay: index / 10,
+      },
+    },
+    inactive: {
+      opacity: 0,
+    },
+  };
+};
