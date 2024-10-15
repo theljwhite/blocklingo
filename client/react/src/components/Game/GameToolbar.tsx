@@ -1,18 +1,31 @@
+import { useEffect } from "react";
 import { useGameStore } from "../../game/store";
 import { useGameAudio } from "../../game/store/AudioContext";
 import { useSession } from "../../managers/auth/useSession";
+import { useAccount } from "wagmi";
+import useRewards from "../../game/hooks/useRewards";
+import { useRewardsStore } from "../../game/store/rewards-store";
 import { UserTypeValue } from "../../managers/user-profile-manager";
+import LightModeSwitch from "../UI/LightModeSwitch";
+import { LoadingSpinner } from "../UI/Spinners";
 import {
   ShuffleIcon,
   SoundIcon,
   BrainIcon,
   LightbulbIcon,
 } from "../UI/Icons/game";
-import { ShieldIconOne, ResetIcon } from "../UI/Icons";
-import LightModeSwitch from "../UI/LightModeSwitch";
+import {
+  ShieldIconOne,
+  ResetIcon,
+  NetworkIcon,
+  CoinsOne,
+  SvgProjectLogo,
+} from "../UI/Icons";
 
 export default function GameToolbar() {
   const {
+    puzzleDetails,
+    step,
     isSoundOn,
     isLightMode,
     isAdminMode,
@@ -22,15 +35,54 @@ export default function GameToolbar() {
   } = useGameStore((state) => state);
   const { toggleSound } = useGameAudio();
 
+  const { userBalance, balanceLoading } = useRewardsStore((state) => state);
+  const { isConnected, address, chain } = useAccount();
+  const { getAndSetUserBalance } = useRewards();
+
   const { session } = useSession();
   const isUserAdmin = session?.user?.userTypeId === UserTypeValue.Admin;
 
+  useEffect(() => {
+    if (isConnected && address) getAndSetUserBalance();
+  }, [address, isConnected]);
+
   return (
-    <div className="border-y border-neutral-21 bg-almostblack text-neutral-22">
-      <div className="mx-auto px-6 max-w-screen-xl ">
+    <div className="border-y border-neutral-21 bg-almostblack font-second text-neutral-22">
+      <div className="mx-auto max-w-screen-xl ">
         <div className="grow shrink m-3 flex flex-nowrap justify-between">
           <header className="w-full block">
-            <section className="relative flex flex-row items-center justify-end h-6">
+            <section className="relative flex flex-row items-center justify-between h-6">
+              <div className="flex flex-row items-center h-full text-neutral-22">
+                <span className="text-neutral-22 border-none h-full flex-row gap-2 text-sm flex px-2.5 bg-almostblack items-center text-lg">
+                  <NetworkIcon size={20} />
+                  {chain?.name ?? "No wallet connected"}
+                </span>
+                {isConnected && address && (
+                  <>
+                    {balanceLoading ? (
+                      <span className="text-neutral-22 border-none h-full flex-row gap-2 text-sm flex px-2.5 bg-almostblack items-center text-lg">
+                        <CoinsOne size={20} />
+                        Balance: <LoadingSpinner size={16} />
+                      </span>
+                    ) : (
+                      userBalance.formatted && (
+                        <span className="text-neutral-22 border-none h-full flex-row gap-2 text-sm flex px-2.5 bg-almostblack items-center text-lg">
+                          <CoinsOne size={20} />
+                          Balance: {Number(userBalance.formatted).toFixed(2)} $
+                          {import.meta.env.VITE_ERC20_TOKEN_SYMBOL}
+                        </span>
+                      )
+                    )}
+                  </>
+                )}
+                {puzzleDetails && (
+                  <span className="text-neutral-22 border-none h-full flex-row gap-2 text-sm flex px-2.5 bg-almostblack items-center text-lg">
+                    <SvgProjectLogo size={22} />
+                    Playing Puzzle #{puzzleDetails.id} - Stage {step + 1} (
+                    {puzzleDetails.difficulty} difficulty)
+                  </span>
+                )}
+              </div>
               <div className="flex flex-row items-center h-full text-neutral-22">
                 {isUserAdmin && (
                   <button

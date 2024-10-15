@@ -77,6 +77,8 @@ export default function useContextGame() {
 
       handleGameStatusChange(userGuess, targetWord);
     } catch (error) {
+      playSound("error_short");
+      setIsCalculating(false);
       toastError("External API issue. Try your guess again.");
     }
   };

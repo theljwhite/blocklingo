@@ -15,8 +15,8 @@ export const polygonAmoy: Chain = {
     },
     default: {
       http: [
-        `${process.env.NEXT_PUBLIC_INFURA_AMOY}`,
-        `${process.env.NEXT_PUBLIC_ALCHEMY_AMOY}`,
+        `${import.meta.env.VITE_ALCHEMY_AMOY}`,
+        `${import.meta.env.VITE_INFURA_AMOY}`,
       ],
     },
   },

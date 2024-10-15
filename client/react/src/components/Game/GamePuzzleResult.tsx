@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../../game/store";
 import useDbPuzzle from "../../game/hooks/useDbPuzzle";
 import useDifficulties from "../../game/hooks/useDifficulties";
+import useRewards from "../../game/hooks/useRewards";
+import { useRewardsStore } from "../../game/store/rewards-store";
 import { useAccount } from "wagmi";
 import { motion } from "framer-motion";
 import { doConfetti } from "../../game/data/misc/particles";
@@ -19,10 +21,14 @@ export default function GamePuzzleResult() {
     contextGuesses,
     mistakes,
     reset,
+    setIsResetting,
   } = useGameStore((state) => state);
+
+  const { transactionHash } = useRewardsStore((state) => state);
 
   const { getEarnedPoints } = useDbPuzzle();
   const { getDifficultySettings } = useDifficulties();
+  const { rewardUser } = useRewards();
   const { isConnected, address } = useAccount();
   const navigate = useNavigate();
 
@@ -167,17 +173,21 @@ export default function GamePuzzleResult() {
             >
               View Results
             </button>
-            {isWalletConnected && won && (
+            {isWalletConnected && won && puzzleDetails?.rewardAmount && (
               <button
+                onClick={() => rewardUser(puzzleDetails.rewardAmount)}
                 type="button"
-                disabled={false}
+                disabled={!!transactionHash}
                 className="bg-almostblack text-neutral-22 disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:border-gray-400 disabled:text-zinc-500 text-almostblack block mx-auto text-center relative border-neutral-22 border h-[3em] rounded-lg items-center font-bold font-second px-2 w-full"
               >
                 Claim rewards
               </button>
             )}
             <button
-              onClick={reset}
+              onClick={() => {
+                reset();
+                setIsResetting(true);
+              }}
               type="button"
               disabled={false}
               className="bg-primary-1 disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:border-gray-400 disabled:text-zinc-500 text-almostblack block mx-auto text-center relative border-blackborder h-[3em] rounded-lg items-center font-bold font-second px-2 w-full"

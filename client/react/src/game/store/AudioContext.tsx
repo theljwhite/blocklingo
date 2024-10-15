@@ -20,6 +20,7 @@ const GAME_AUDIO = {
   lost: "./audio/lost-organ.mp3",
   win_long: "./audio/puzzle-win.mp3",
   loading: "./audio/loading.wav",
+  cash: "./audio/cash.mp3",
 };
 
 const GameAudioContext = createContext<{

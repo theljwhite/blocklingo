@@ -1,3 +1,7 @@
+import { wagmiConfig } from "../configs/wagmi";
+import { encodeFunctionData } from "viem";
+import { estimateGas } from "wagmi/actions";
+
 export const shortenEthereumAddress = (
   address: string,
   startSlice: number,
@@ -11,3 +15,21 @@ export const shortenEthereumAddress = (
 };
 
 export default shortenEthereumAddress;
+
+export const extraEstimatedGas = async (
+  params: any, //TODO sb WriteContractParameters
+  toAddress: `0x${string}`,
+  percentageExtra: bigint
+): Promise<bigint | null> => {
+  const encodedParams = encodeFunctionData(params);
+  const estimatedGas = await estimateGas(wagmiConfig, {
+    data: encodedParams,
+    to: toAddress ?? "0x",
+  });
+
+  const estimatedWithExtra = estimatedGas
+    ? (estimatedGas * percentageExtra) / BigInt(100)
+    : null;
+
+  return estimatedWithExtra;
+};

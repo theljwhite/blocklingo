@@ -69,6 +69,7 @@ export default function GameContextBoard() {
     const maxScaledScore = Math.log10(CONTEXT_WORST_SIMILARITY_SCORE + 1);
     let widthPercentage = (1 - scaledScore / maxScaledScore) * 100;
 
+    if (score <= 1) widthPercentage = 100;
     if (score < 1000) {
       bgClass = "bg-success-1";
     } else if (score < 4000) {
