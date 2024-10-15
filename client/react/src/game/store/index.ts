@@ -117,7 +117,7 @@ export const useGameStore = create<GameState>((set, get) => {
   const initialGameState = {
     isLoading: false,
     errors: [],
-    step: 0,
+    step: 1,
     furthestStep: 0,
     isLightMode: false,
     connectionBoard: [],
@@ -133,7 +133,7 @@ export const useGameStore = create<GameState>((set, get) => {
     isAdminMode: false,
     isResetting: false,
     puzzleDetails: null,
-    contextTargetWord: "",
+    contextTargetWord: "bacon",
     contextCurrentGuess: "",
     contextCurrentGuessObj: null,
     contextGuesses: [],

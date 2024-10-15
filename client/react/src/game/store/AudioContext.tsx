@@ -21,6 +21,8 @@ const GAME_AUDIO = {
   win_long: "./audio/puzzle-win.mp3",
   loading: "./audio/loading.wav",
   cash: "./audio/cash.mp3",
+  reveal: "./audio/reveal.wav",
+  score_bar: "./audio/score-bar.wav",
 };
 
 const GameAudioContext = createContext<{

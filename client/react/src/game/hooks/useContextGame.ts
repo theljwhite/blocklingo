@@ -8,7 +8,10 @@ import {
   getScoreFromSimilarity,
 } from "../logic/embeddings";
 import { WORD_STEM_REPLACE } from "../../constants/regex";
-import { CONTEXT_INCORRECT_GUESSES_ALLOWED } from "../data/constants";
+import {
+  CONTEXT_INCORRECT_GUESSES_ALLOWED,
+  GAME_END_ANIM_DELAY_MS,
+} from "../data/constants";
 import { toastError } from "../../components/UI/Toast/Toast";
 
 //NOTE - these bottom 2 funcs are prob not needed anymore, but keeping just in case.
@@ -110,12 +113,13 @@ export default function useContextGame() {
   ): Promise<void> => {
     if (userGuess === targetWord) {
       playSound("bell");
+      playSound("score_bar");
       await updateSolvedPuzzleAttempt();
 
       setTimeout(() => {
         playSound("win_long");
         setContextGameStatus("Won");
-      }, 1000);
+      }, GAME_END_ANIM_DELAY_MS);
     }
 
     if (

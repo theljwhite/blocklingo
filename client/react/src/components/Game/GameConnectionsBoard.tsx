@@ -167,7 +167,7 @@ export default function GameConnectionsBoard() {
               You {connectionsStatus.toLowerCase()} the connections stage!
             </p>
           ) : (
-            <p className="flex items-center gap-2 text-neutral-22">
+            <p className="flex items-center font-second gap-2 text-neutral-22">
               Mistakes remaining:
               <span className="flex gap-2.5 min-w-[120px]">
                 <AnimatePresence>

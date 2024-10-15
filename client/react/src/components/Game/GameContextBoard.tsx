@@ -7,9 +7,9 @@ import {
 } from "../../game/data/constants";
 import { motion } from "framer-motion";
 import {
-  correctGuessAnimation,
-  correctGuessTransition,
-} from "../../game/data/animations/connections";
+  contextScoreBarVariant,
+  contextScoreBorderVariant,
+} from "../../game/data/animations/context-board";
 import { contextInputVariant } from "../../game/data/animations/context-board";
 import { textLeftToRightVariant } from "../../game/data/animations/dialog";
 import { REGEX_ONLY_ALPHABET } from "../../constants/regex";
@@ -156,35 +156,45 @@ export default function GameContextBoard() {
                   </div>
                 ) : contextCurrentGuessObj ? (
                   <motion.div
-                    initial={{ borderColor: "#FFF" }}
-                    animate={
-                      contextCurrentGuessObj.animate
-                        ? correctGuessAnimation
-                        : { borderColor: "#FFF" }
-                    }
-                    transition={
-                      contextCurrentGuessObj.selected && correctGuessTransition
-                    }
+                    initial="closed"
+                    animate={contextCurrentGuessObj.animate && "open"}
+                    variants={contextScoreBorderVariant}
+                    style={{ boxShadow: "0px 0px 40px 0px #10b981" }}
                     className="rounded-lg border-[3px] border-white overflow-hidden relative mt-2"
                   >
                     <div
                       id="outer"
                       className="bg-neutral-20 h-full w-full absolute"
                     >
-                      <div
-                        id="inner"
-                        style={{
-                          width: `${
+                      {contextCurrentGuessObj.animate ? (
+                        <motion.div
+                          initial="closed"
+                          animate="open"
+                          variants={contextScoreBarVariant}
+                          id="inner"
+                          className={`${
                             handleGuessScoreBar(
                               contextCurrentGuessObj.rankScore
-                            ).width
-                          }%`,
-                        }}
-                        className={`${
-                          handleGuessScoreBar(contextCurrentGuessObj.rankScore)
-                            .bgClass
-                        } w-[1%] h-full min-w-[1%] rounded-r-lg`}
-                      />
+                            ).bgClass
+                          } h-full min-w-[1%] rounded-r-lg`}
+                        />
+                      ) : (
+                        <div
+                          id="inner"
+                          style={{
+                            width: `${
+                              handleGuessScoreBar(
+                                contextCurrentGuessObj.rankScore
+                              ).width
+                            }%`,
+                          }}
+                          className={`${
+                            handleGuessScoreBar(
+                              contextCurrentGuessObj.rankScore
+                            ).bgClass
+                          } h-full min-w-[1%] rounded-r-lg`}
+                        />
+                      )}
                     </div>
                     <div
                       id="row"

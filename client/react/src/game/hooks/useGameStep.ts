@@ -1,4 +1,7 @@
 import { useGameStore } from "../store";
+import { useGameAudio } from "../store/AudioContext";
+
+//TODO - add step validation eventually
 
 export default function useGameStep() {
   const {
@@ -8,6 +11,8 @@ export default function useGameStep() {
     setStep,
     setFurthestStep,
   } = useGameStore((state) => state);
+
+  const { play: playSound } = useGameAudio();
 
   const handleStepClick = (index: number): void => {
     if (index < currStep) {
@@ -27,6 +32,8 @@ export default function useGameStep() {
       // }
 
       setStep(index);
+
+      playSound("reveal");
 
       if (index > furthestStep) {
         setFurthestStep(index);
