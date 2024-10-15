@@ -25,7 +25,11 @@ export default function useRewards() {
     useRewardsStore((state) => state);
   const { isConnected, address: userAddress } = useAccount();
 
-  const { setModal, reset: resetModal } = useDialogModalStore((state) => state);
+  const {
+    setModal,
+    reset: resetModal,
+    modalLoadingWithMessage,
+  } = useDialogModalStore((state) => state);
   const { play: playSound } = useGameAudio();
 
   const getUserBalance = async (): Promise<GetBalanceReturnType | null> => {
@@ -69,7 +73,8 @@ export default function useRewards() {
       const rewardTokenDecimals = Number(import.meta.env.VITE_ERC20_DECIMALS);
       const amountInWei = parseUnits(amount.toString(), rewardTokenDecimals);
 
-      rewardModalLoading(
+      modalLoadingWithMessage(
+        "Claiming rewards",
         "Follow the prompts in your wallet to claim your rewards."
       );
 
@@ -80,8 +85,9 @@ export default function useRewards() {
         return;
       }
 
-      rewardModalLoading(
-        "Thanks for signing! Awaiting wallet transaction confirmation..."
+      modalLoadingWithMessage(
+        "Waiting for wallet confirmation",
+        "Thanks for signing! Please confirm the transaction in your wallet."
       );
 
       const writeParams = {
@@ -106,10 +112,6 @@ export default function useRewards() {
       const txHash = await writeContract(wagmiConfig, request);
 
       if (!txHash) throw new Error();
-
-      rewardModalLoading(
-        "Processing your transaction. For the moment, please remain idle."
-      );
 
       const updatedFormattedBalance = Number(userBalance.formatted) + amount;
 
@@ -149,17 +151,6 @@ export default function useRewards() {
     });
 
     return isValid;
-  };
-
-  const rewardModalLoading = (message: string): void => {
-    setModal({
-      type: "Loading",
-      title: "Claiming rewards",
-      message,
-      isOpen: true,
-      isLoading: true,
-      outLink: "",
-    });
   };
 
   const rewardModalSuccess = (txHash: string): void => {

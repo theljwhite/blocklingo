@@ -13,14 +13,16 @@ export default function ModalDialog() {
       opacity: 1,
       // y: 0,
       transition: {
-        duration: 0.3,
+        duration: 0.15,
+        ease: "linear",
       },
     },
     closed: {
       opacity: 0,
       // y: -1000,
       transition: {
-        duration: 0.3,
+        duration: 0.15,
+        ease: "linear",
       },
     },
   };
@@ -28,16 +30,18 @@ export default function ModalDialog() {
   const modalVariants = {
     open: {
       opacity: 1,
-      scale: 1,
+      y: 0,
       transition: {
-        duration: 0.3,
+        duration: 0.15,
+        ease: [0.15, 1.15, 0.6, 1.0],
       },
     },
     closed: {
       opacity: 0,
-      scale: 0.75,
+      y: "100%",
       transition: {
-        duration: 0.3,
+        duration: 0.15,
+        ease: [0.15, 1.15, 0.6, 1.0],
       },
     },
   };

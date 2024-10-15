@@ -22,7 +22,7 @@ const gameSteps: GameStep[] = [
   },
   {
     id: 1,
-    title: "Wordgame",
+    title: "Guess the word!",
     content: <GameContextBoard />,
   },
   {

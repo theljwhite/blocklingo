@@ -17,10 +17,24 @@ export type Modal = {
 export interface ModalState {
   modal: Modal;
   setModal: (modal: Modal) => void;
+  modalLoadingWithMessage: (title: string, message: string) => void;
   reset: () => void;
 }
 
 export const useDialogModalStore = create<ModalState>((set) => {
+  const modalLoadingWithMessage = (title: string, message: string): void => {
+    return set({
+      modal: {
+        type: "Loading",
+        title,
+        message,
+        isOpen: true,
+        isLoading: true,
+        outLink: "",
+      },
+    });
+  };
+
   const initialState = {
     modal: {
       type: "Loading" as ModalType,
@@ -35,6 +49,7 @@ export const useDialogModalStore = create<ModalState>((set) => {
   return {
     ...initialState,
     setModal: (modal: Modal) => set({ modal }),
+    modalLoadingWithMessage,
     reset: () => set({ ...initialState }),
   };
 });
