@@ -112,7 +112,7 @@ export default function useContextGame() {
     targetWord: string
   ): Promise<void> => {
     if (userGuess === targetWord) {
-      playSound("bell");
+      playSound("success");
       playSound("score_bar");
       await updateSolvedPuzzleAttempt();
 

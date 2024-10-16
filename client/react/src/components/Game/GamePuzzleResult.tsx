@@ -72,9 +72,18 @@ export default function GamePuzzleResult() {
               restDelta: 0.001,
             },
           }}
-          className="relative mx-auto block w-[30rem] rounded-xl border-2 border-zinc-700 p-10 shadow-lg backdrop-blur-md bg-transparent"
+          // style={{ boxShadow: "0px 0px 50px 4px #34343a" }}
+          className="relative mx-auto block w-[30rem] rounded-xl border border-zinc-700 p-10 shadow-lg backdrop-blur-md bg-transparent"
         >
-          <div className="grid grid-cols-1 gap-4">
+          <motion.div
+            initial={{ opacity: 0.0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 1.0,
+              ease: "cubicBezier",
+            }}
+            className="grid grid-cols-1 gap-4"
+          >
             <div className="text-center pb-4 text-white">
               <div className="flex items-center justify-center text-neutral-22 flex-row gap-1">
                 <h1 className="text-2xl font-second">
@@ -163,7 +172,7 @@ export default function GamePuzzleResult() {
                 )}
               </section>
             )}
-          </div>
+          </motion.div>
           <div className="flex flex-row text-sm mt-10 gap-2">
             <button
               onClick={() => navigate(ROUTE_LEADERBOARD)}

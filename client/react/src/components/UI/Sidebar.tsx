@@ -26,6 +26,7 @@ import {
 } from "./Icons";
 
 //TODO - sidebar close on route nav link click
+//TODO - can get rid of the useEffect here and use framer motion to animate
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -76,7 +77,7 @@ const tokenItems: SidebarListItem[] = [
   },
   {
     title: `$${import.meta.env.VITE_ERC20_TOKEN_SYMBOL} ERC20 token`,
-    path: EXTERNAL_ROUTE_ERC20_TOKEN,
+    path: import.meta.env.VITE_ERC20_TOKEN_PATH,
     icon: <EthCircleIcon size="20" />,
   },
   {
@@ -209,7 +210,12 @@ export default function Sidebar({
               {tokenItems.map((item, index) => {
                 return (
                   <li key={index}>
-                    <Link className="block" to={item.path}>
+                    <a
+                      className="block"
+                      href={item.path}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <div className="flex justify-start items-start text-neutral-22 font-second text-base px-4 py-2 hover:bg-neutral-25">
                         {item.image ? (
                           <span
@@ -229,7 +235,7 @@ export default function Sidebar({
                           {item.title}
                         </div>
                       </div>
-                    </Link>
+                    </a>
                   </li>
                 );
               })}
@@ -249,7 +255,7 @@ export default function Sidebar({
           <div className="flex flex-row items-center gap-2 justify-evenly mt-2 flex-nowrap p-2">
             <StyledSquareButton
               type="button"
-              text={isConnected && address ? "hello" : "Connect"}
+              text={isConnected && address ? "Disconnect" : "Connect"}
               onClick={closeSidebarOpenCryptoModal}
               disabled={false}
               bgClass="bg-black"
