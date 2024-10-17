@@ -3,7 +3,7 @@ export const phrases = ["taller than the rest", "a mound or hill"];
 export const generalHypernyms = ["station", "embed", "boat", "plane"];
 
 export const triggerWords = [
-  ["cow", "tree", "dog", "fruit"],
+  ["tire", "creek", "fork", "lawn"],
   ["art", "paper", "pastry", "canoe"],
-  ["football", "duck", "street", "garbage"],
+  ["coffee", "field", "thief", "farm"],
 ];

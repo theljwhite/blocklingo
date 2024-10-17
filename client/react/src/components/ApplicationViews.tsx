@@ -20,10 +20,7 @@ export default function ApplicationViews() {
       <Route
         element={
           <>
-            <main
-              className="bg-primary-1"
-              // style={{ background: "url('./tile_20pc.png')" }}
-            >
+            <main className="bg-primary-1">
               <div className="flex min-h-screen flex-col">
                 <Navbar />
                 <Outlet />

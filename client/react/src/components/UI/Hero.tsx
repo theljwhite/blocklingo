@@ -10,6 +10,7 @@ import {
 } from "../../constants/routes";
 import shortenEthereumAddress from "../../helpers/eth-utils";
 import StyledButton from "./StyledButton";
+import HeroParticles from "./HeroParticles";
 
 export default function Hero() {
   const { isConnected, address } = useAccount();
@@ -23,6 +24,7 @@ export default function Hero() {
 
   return (
     <>
+      <HeroParticles />
       <section className="relative w-full min-h-[calc(100vh - 55px)] block right-0 left-0">
         <div className="w-full text-almostblack min-h-[calc(100vh - 55px)] mt-40 mx-auto flex flex-col text-center">
           <div className="flex flex-col items-center justify-start flex-nowrap relative h-full px-2 py-4">

@@ -11,7 +11,6 @@ import {
   ROUTE_HOW_TO_PLAY,
   ROUTE_EARNINGS,
   ROUTE_PRIVACY_POLICY,
-  EXTERNAL_ROUTE_ERC20_TOKEN,
   ROUTE_LOGIN,
 } from "../../constants/routes";
 import StyledSquareButton from "./StyledSquareButton";

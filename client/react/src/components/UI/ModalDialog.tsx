@@ -11,7 +11,6 @@ export default function ModalDialog() {
   const modalBgVariants = {
     open: {
       opacity: 1,
-      // y: 0,
       transition: {
         duration: 0.15,
         ease: "linear",
@@ -19,7 +18,6 @@ export default function ModalDialog() {
     },
     closed: {
       opacity: 0,
-      // y: -1000,
       transition: {
         duration: 0.15,
         ease: "linear",

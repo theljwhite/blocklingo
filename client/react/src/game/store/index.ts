@@ -196,6 +196,7 @@ export const useGameStore = create<GameState>((set, get) => {
         isResetting: true,
         step: get().step,
         isAdminMode: get().isAdminMode,
+        isSoundOn: get().isSoundOn,
       }),
   };
 });

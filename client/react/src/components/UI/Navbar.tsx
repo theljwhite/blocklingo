@@ -35,7 +35,7 @@ export default function Navbar() {
           setIsSidebarOpen={setIsSidebarOpen}
         />
       </div>
-      <div className="w-full block bg-almostblack">
+      <div className="w-full block bg-almostblack z-[10]">
         <header className="w-full block">
           <section className="justify-between relative flex flex-row items-center lg:h-14 h-12 border border-b border-neutral-21 px-4">
             <div className="flex flex-row items-center h-full">

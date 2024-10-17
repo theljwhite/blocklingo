@@ -68,7 +68,9 @@ export default function GameToolbar() {
                       userBalance.formatted && (
                         <span className="text-neutral-22 border-none h-full flex-row gap-2 text-sm flex px-2.5 bg-almostblack items-center text-lg">
                           <CoinsOne size={20} />
-                          Balance: {Number(userBalance.formatted).toFixed(2)} $
+                          Balance: {Number(userBalance.formatted).toFixed(
+                            2
+                          )}{" "}
                           {import.meta.env.VITE_ERC20_TOKEN_SYMBOL}
                         </span>
                       )

@@ -41,6 +41,7 @@ export default function GameStepper() {
     isAdminMode,
     isResetting,
     setIsResetting,
+    reset,
   } = useGameStore((state) => state);
   const { getDifficultySettings } = useDifficulties();
   const { createConnectionsBoard, createConnectionsBoardDb } =
@@ -49,7 +50,10 @@ export default function GameStepper() {
   const { session } = useSession();
 
   useEffect(() => {
-    if (session.user?.id) initializeStep();
+    if (session.user?.id) {
+      initializeStep();
+      reset();
+    }
   }, [session.user?.id]);
 
   useEffect(() => {
