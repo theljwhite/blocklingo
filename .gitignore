@@ -402,16 +402,16 @@ FodyWeavers.xsd
 /client/react/node_modules
 
 # Contracts and Hardhat
-/contracts/node_modules
+/hardhat/node_modules
 
 # Hardhat files
-/contracts/cache
-/contracts/artifacts
+/hardhat/cache
+/hardhat/artifacts
 
 # TypeChain files
-/contracts/typechain
-/contracts/typechain-types
+/hardhat/typechain
+/hardhat/typechain-types
 
 # solidity-coverage files
-/contracts/coverage
-/contracts/coverage.json
+/hardhat/coverage
+/hardhat/coverage.json
