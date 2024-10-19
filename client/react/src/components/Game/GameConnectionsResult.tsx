@@ -7,6 +7,7 @@ import {
   showGuessesListItemVariants,
   showGuessesListVariants,
   showGuessesWordAnimation,
+  liWordAnimationNew,
 } from "../../game/data/animations/connections";
 import {
   CONNECTION_BOARD_WIDTH,
@@ -50,12 +51,12 @@ export default function GameConnectionsResult() {
             <motion.section
               variants={showGuessesSectionVariant}
               key={`result-${index}`}
-              className="uppercase flex opacity-0 flex-col items-center justify-center text-lg text-almostblack overflow-hidden font-second rounded-xl"
-              style={{ backgroundColor: CORRECT_GUESS_COLORS[index] }}
+              className="uppercase bg-almostblack border-4 flex opacity-0 flex-col items-center justify-center text-lg text-neutral-22 overflow-hidden font-second rounded-xl"
+              style={{ borderColor: CORRECT_GUESS_COLORS[index] }}
             >
               <motion.h3
-                animate={showGuessesWordAnimation}
-                className="font-bold text-black"
+                animate={liWordAnimationNew}
+                className="font-bold text-neutral-22 opacity-0"
               >
                 {item.connectionGroupName}
               </motion.h3>

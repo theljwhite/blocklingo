@@ -15,6 +15,7 @@ import {
   listItemVariants,
   listVariants,
   slowDispappearTransition,
+  liWordAnimationNew,
 } from "../../game/data/animations/connections";
 import { ROUTE_LEADERBOARD } from "../../constants/routes";
 import tailwindConfig from "../../../tailwind.config";
@@ -77,13 +78,13 @@ export default function GameConnectionsBoard() {
                       <motion.section
                         animate={{ opacity: 100 }}
                         key={index}
-                        className="uppercase flex opacity-0 flex-col items-center justify-center text-lg text-almostblack overflow-hidden font-second rounded-xl"
-                        style={{ backgroundColor: CORRECT_GUESS_COLORS[index] }}
+                        className="uppercase border-4 bg-almostblack flex opacity-0 flex-col items-center justify-center text-lg text-gray-300 overflow-hidden font-second rounded-xl"
+                        style={{ borderColor: CORRECT_GUESS_COLORS[index] }}
                       >
                         <motion.h3
-                          animate={liWordAnimation}
+                          animate={liWordAnimationNew}
                           transition={connGroupTransition}
-                          className="font-bold text-black"
+                          className="font-bold text-neutral-22 opacity-0"
                         >
                           {item.connectionGroupName}
                         </motion.h3>

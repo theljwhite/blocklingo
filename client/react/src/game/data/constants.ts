@@ -7,6 +7,15 @@ export const CORRECT_GUESS_COLORS = [
   "#fbcfe8",
   "#99f6e4",
 ];
+// export const CORRECT_GUESS_COLORS = [
+//   // "#bbf7d0",
+//   // "#fed7aa",
+//   "#e9d5ff",
+//   "#bae6fd",
+//   "#F7D0BB",
+//   "#fbcfe8",
+//   "#99f6e4",
+// ];
 export const CONNECTION_MISTAKES_POINTS_PENALTY = 10;
 export const CONTEXT_FAILED_GUESSES_POINTS_PENALTY = 1;
 export const CONTEXT_BEST_SIMILARITY_SCORE = 1;

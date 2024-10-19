@@ -127,7 +127,6 @@ export default function useRewards() {
         rewardModalSuccess(txHash);
       }, 1000);
     } catch (error) {
-      console.error("Error signing or processing tx -->", error);
       setTimeout(() => {
         rewardModalError();
       }, 1000);

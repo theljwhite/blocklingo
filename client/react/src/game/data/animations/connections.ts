@@ -38,6 +38,10 @@ export const liWordAnimation = {
   color: ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"],
 };
 
+export const liWordAnimationNew = {
+  opacity: 100,
+};
+
 export const liWordTransition = {
   duration: 0.8,
   delay: 0.8,
