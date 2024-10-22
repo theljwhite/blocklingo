@@ -6,6 +6,7 @@ import {
   ROUTE_LOGIN,
   ROUTE_REGISTER,
   ROUTE_SETTINGS,
+  ROUTE_PROFILE_EXACT,
 } from "../constants/routes";
 import Authorized from "../managers/auth/Authorized";
 import Navbar from "./UI/Navbar";
@@ -13,6 +14,7 @@ import Hero from "./UI/Hero";
 import Login from "./User/Login";
 import Register from "./User/Register";
 import GameContainer from "./Game/GameContainer";
+import Settings from "./User/Settings";
 
 export default function ApplicationViews() {
   return (
@@ -43,15 +45,17 @@ export default function ApplicationViews() {
           path={ROUTE_SETTINGS}
           element={
             <Authorized>
-              <span>ACCOUNT SETTINGS</span>
+              <Settings />
             </Authorized>
           }
         />
+        <Route path={ROUTE_PROFILE_EXACT} element={<span>PROFILE</span>} />
         <Route
           path={ROUTE_HOW_TO_PLAY}
           element={<span>HOW TO PLAY/HELP</span>}
         />
       </Route>
+
       <Route path={ROUTE_LOGIN} element={<Login />} />
       <Route path={ROUTE_REGISTER} element={<Register />} />
     </Routes>

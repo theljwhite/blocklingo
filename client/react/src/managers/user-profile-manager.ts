@@ -1,6 +1,7 @@
 import {
   USER_PROFILE_BASE,
   USER_PROFILE_BY_ID,
+  USER_PROFILE_BY_USERNAME,
   USER_PROFILE_LOGIN,
 } from "../constants/db";
 import { type ApiError, post } from "./api";
@@ -36,6 +37,10 @@ export const userManager = {
   },
   getById: async (id: number) => {
     const response = await fetch(USER_PROFILE_BY_ID(id));
+    return await response.json();
+  },
+  getByUsername: async (username: string) => {
+    const response = await fetch(USER_PROFILE_BY_USERNAME(username));
     return await response.json();
   },
   login: async (email: string, password: string): Promise<User | ApiError> => {

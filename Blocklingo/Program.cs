@@ -12,6 +12,7 @@ namespace Blocklingo
             builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository>(); 
             builder.Services.AddTransient<IPuzzleRepository, PuzzleRepository>();
             builder.Services.AddTransient<IPuzzleAttemptRepository, PuzzleAttemptRepository>(); 
+            builder.Services.AddTransient<IUserAchievementRepository,  UserAchievementRepository>();    
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

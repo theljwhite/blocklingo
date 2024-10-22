@@ -3,6 +3,7 @@ using Blocklingo.Utils;
 using Microsoft.Data.SqlClient;
 
 //TODO - can hash passwords. for demo purposes, plain text works.
+//TODO - add unique constraint for username
 
 namespace Blocklingo.Repositories
 {
@@ -99,6 +100,35 @@ namespace Blocklingo.Repositories
 
                     reader.Close();
                     return profile; 
+                }
+            }
+        }
+
+        public UserProfile GetByUsername(string username)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT up.*, ut.Name AS UserTypeName 
+                        FROM UserProfile up
+                        JOIN UserType ut ON ut.Id = up.UserTypeId
+                        WHERE up.Username = @username";
+
+                    DbUtils.AddParameter(cmd, "username", username);
+
+                    var reader = cmd.ExecuteReader();
+                    UserProfile profile = null;
+
+                    if (reader.Read())
+                    {
+                        profile = NewUserProfileFromReader(reader);
+                    }
+
+                    reader.Close();
+                    return profile;
                 }
             }
         }

@@ -80,7 +80,7 @@ export default function GamePuzzleResult() {
             animate={{ opacity: 1 }}
             transition={{
               duration: 1.0,
-              ease: "cubicBezier",
+              ease: "linear",
             }}
             className="grid grid-cols-1 gap-4"
           >

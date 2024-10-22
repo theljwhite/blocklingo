@@ -26,7 +26,15 @@ namespace Blocklingo.Controllers
             var profile = _userProfileRepository.GetById(id);
 
             if (profile == null) return NotFound();
-            return Ok(profile); 
+            return Ok(profile);
+        }
+
+        [HttpGet("username/{username}")]
+        public IActionResult GetByUsername(string username)
+        {
+            var profile = _userProfileRepository.GetByUsername(username);
+            if (profile == null) return NotFound();
+            return Ok(profile);
         }
 
         //The below works for demo purposes

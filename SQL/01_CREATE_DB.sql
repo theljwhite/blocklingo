@@ -133,7 +133,8 @@ CREATE TABLE [Achievement] (
 [Id] integer PRIMARY KEY identity NOT NULL,
 [Name] nvarchar(255) NOT NULL, 
 [Description] nvarchar(255), 
-[Points] integer NOT NULL
+[Points] integer,
+[Image] nvarchar(255)
 )
 GO
 

@@ -212,3 +212,10 @@ VALUES
     (32, 2, 32);
 SET IDENTITY_INSERT [PuzzlePuzzleWord] OFF; 
 GO
+
+--Add an achievement
+SET IDENTITY_INSERT [Achievement] ON;
+INSERT INTO [Achievement] ([Id], [Name], [Description], [Image])
+VALUES (1, 'Perfect', 'Complete a full puzzle with no connections mistakes', 'perfect-badge.png')
+SET IDENTITY_INSERT [Achievement] OFF;
+GO
