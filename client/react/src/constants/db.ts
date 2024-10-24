@@ -36,3 +36,5 @@ export const USER_ACHIEVEMENT_BY_ID = (id: number) =>
   `${USER_ACHIEVEMENT_BASE}/${id}`;
 export const USER_ACHIEVEMENT_ALL_BY_USER_ID = (userId: number) =>
   `${USER_ACHIEVEMENT_BASE}/user/${userId}`;
+export const USER_ACHIEVEMENT_ALL_BY_USERNAME = (username: string) =>
+  `${USER_ACHIEVEMENT_BASE}/username/${username}`;

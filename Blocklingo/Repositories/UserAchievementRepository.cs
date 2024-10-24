@@ -62,7 +62,7 @@ namespace Blocklingo.Repositories
                         SELECT ua.EarnedAt, ua.Id, a.Name, a.Description, a.Image, a.Points
                         FROM UserAchievement ua
                         JOIN Achievement a ON ua.AchievementId = a.Id
-                        Where ua.UserId = @UserId";
+                        WHERE ua.UserId = @UserId";
 
                     DbUtils.AddParameter(cmd, "@UserId", userId); 
 
@@ -77,6 +77,38 @@ namespace Blocklingo.Repositories
                     reader.Close();
                     return userAchievements;
                 }
+            }
+        }
+
+        public List<Achievement> GetAchievementsByUsername(string username) { 
+        
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT ua.EarnedAt, ua.Id, a.Name, a.Description, a.Image, a.Points
+                        FROM UserAchievement ua
+                        JOIN Achievement a ON ua.AchievementId = a.Id
+                        JOIN UserProfile up ON ua.UserId = up.Id
+                        WHERE up.Username = @Username";
+
+                    DbUtils.AddParameter(cmd, "@Username", username);
+
+                    var reader = cmd.ExecuteReader();
+                    List<Achievement> userAchievements = []; 
+
+                    while (reader.Read())
+                    {
+                        userAchievements.Add(NewAchievementFromReader(reader));
+                    }
+
+                    reader.Close();
+                    return userAchievements;
+                }
+
             }
         }
 

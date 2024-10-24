@@ -1,6 +1,7 @@
 import {
   USER_ACHIEVEMENT_BY_ID,
   USER_ACHIEVEMENT_ALL_BY_USER_ID,
+  USER_ACHIEVEMENT_ALL_BY_USERNAME,
 } from "../constants/db";
 
 export type UserAchievement = {
@@ -15,7 +16,7 @@ export type Achievement = {
   description: string;
   image: string | null;
   points: number | null;
-  earnedAt: Date | null;
+  earnedAt: Date;
 };
 
 export const achievementManager = {
@@ -29,6 +30,12 @@ export const achievementManager = {
     userId: number
   ): Promise<Achievement[] | null> => {
     const response = await fetch(USER_ACHIEVEMENT_ALL_BY_USER_ID(userId));
+    return await response.json();
+  },
+  getUserAchievementByUsername: async (
+    username: string
+  ): Promise<Achievement[] | null> => {
+    const response = await fetch(USER_ACHIEVEMENT_ALL_BY_USERNAME(username));
     return await response.json();
   },
 };

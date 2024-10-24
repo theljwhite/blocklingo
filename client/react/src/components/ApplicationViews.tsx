@@ -15,6 +15,7 @@ import Login from "./User/Login";
 import Register from "./User/Register";
 import GameContainer from "./Game/GameContainer";
 import Settings from "./User/Settings";
+import Profile from "./User/Profile";
 
 export default function ApplicationViews() {
   return (
@@ -49,7 +50,14 @@ export default function ApplicationViews() {
             </Authorized>
           }
         />
-        <Route path={ROUTE_PROFILE_EXACT} element={<span>PROFILE</span>} />
+        <Route
+          path={ROUTE_PROFILE_EXACT}
+          element={
+            <Authorized>
+              <Profile />
+            </Authorized>
+          }
+        />
         <Route
           path={ROUTE_HOW_TO_PLAY}
           element={<span>HOW TO PLAY/HELP</span>}

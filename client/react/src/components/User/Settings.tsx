@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useSession } from "../../managers/auth/useSession";
 import StyledInput from "../UI/StyledInput";
 import LayoutTile from "../UI/Layouts/LayoutTile";
 import ProfileHeader from "./SettingsHeader";
 import { LabelIcon } from "../UI/Icons";
 
+//TODO - to finish
+
 export default function Settings() {
   const [newName, setNewName] = useState<string>("");
-  const { username: userPath } = useParams();
-
   const { session } = useSession();
 
   return (

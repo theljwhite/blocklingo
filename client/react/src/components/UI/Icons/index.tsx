@@ -411,3 +411,35 @@ export const NetworkIcon = ({ color, size }: IconProps): JSX.Element => (
   </svg>
 );
 
+export const InfoIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Zm-9-5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-2 2.25a.75.75 0 0 0 0 1.5h.25V17a.75.75 0 0 0 1.5 0v-7a.75.75 0 0 0-.75-.75h-1Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+export const CopyTextIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    className="CopyAddressTag_CopyIcon__25o7X"
+    viewBox="0 0 24 24"
+    fill={color ?? "currentColor"}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12.643 6.5H8V6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-.5v-4.643A4.857 4.857 0 0 0 12.643 6.5ZM12 22H6a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);

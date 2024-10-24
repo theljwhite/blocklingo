@@ -6,7 +6,7 @@ export const ROUTE_EARNINGS = "/earnings";
 
 export const ROUTE_LOGIN = "/login";
 export const ROUTE_REGISTER = "/register";
-export const ROUTE_PROFILE = (id: number) => `/profile/${id}`;
+export const ROUTE_PROFILE = (username: string) => `/profile/${username}`;
 export const ROUTE_PROFILE_EXACT = "/profile/:username";
 
 export const ROUTE_PRIVACY_POLICY = "/privacy";

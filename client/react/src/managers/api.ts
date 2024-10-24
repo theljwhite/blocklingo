@@ -11,7 +11,7 @@ export const api = {
   users: userManager,
   puzzle: puzzleManager,
   puzzleAttempt: puzzleAttemptManager,
-  achievementManager: achievementManager,
+  achievements: achievementManager,
 };
 
 const defaultPostHeaders = { "Content-Type": "application/json" };

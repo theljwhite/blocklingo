@@ -32,6 +32,13 @@ namespace Blocklingo.Controllers
             return Ok(userAchievements);
         }
 
+        [HttpGet("username/{username}")]
+        public IActionResult GetAchievementsByUsername(string username)
+        {
+            var userAchievements = _achievementRepository.GetAchievementsByUsername(username);
+            return Ok(userAchievements);
+        }
+
         [HttpPost]
         public IActionResult Post(UserAchievement achievement)
         {

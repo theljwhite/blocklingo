@@ -69,7 +69,7 @@ export default function Navbar() {
               <div className="ml-2 flex flex-row gap-2 font-second">
                 {session?.user?.id && (
                   <Link
-                    to={ROUTE_PROFILE(session.user.id)}
+                    to={ROUTE_PROFILE(session.user.username)}
                     className="flex items-center gap-2 justify-center text-primary-1 font-normal tracking-tight text-sm lg:text-base border border-primary-1 rounded-lg px-4 h-8 lg:h-11"
                   >
                     <UserIcon size={18} />
