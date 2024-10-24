@@ -4,6 +4,7 @@ export const USER_PROFILE_BASE = `${API_BASE}/UserProfile`;
 export const PUZZLE_BASE = `${API_BASE}/Puzzle`;
 export const PUZZLE_ATTEMPT_BASE = `${API_BASE}/PuzzleAttempt`;
 export const USER_ACHIEVEMENT_BASE = `${API_BASE}/UserAchievement`;
+export const LEADERBOARD_BASE = `${API_BASE}/Leaderboard`;
 
 export const USER_PROFILE_BY_ID = (id: number) => `${USER_PROFILE_BASE}/${id}`;
 export const USER_PROFILE_LOGIN = `${USER_PROFILE_BASE}/login`;
@@ -38,3 +39,8 @@ export const USER_ACHIEVEMENT_ALL_BY_USER_ID = (userId: number) =>
   `${USER_ACHIEVEMENT_BASE}/user/${userId}`;
 export const USER_ACHIEVEMENT_ALL_BY_USERNAME = (username: string) =>
   `${USER_ACHIEVEMENT_BASE}/username/${username}`;
+
+export const LEADERBOARD_ENTRY_BY_ID = (id: number) =>
+  `${LEADERBOARD_BASE}/${id}`;
+export const LEADERBOARD_ENTRY_BY_USER_ID = (userId: number) =>
+  `${LEADERBOARD_BASE}/user/${userId}`;

@@ -19,7 +19,7 @@ namespace Blocklingo.Repositories
                     cmd.CommandText = @"
                         INSERT INTO PuzzleAttempt (CompletionTimeSeconds, Tries, IsSolved, EarnedPoints, Mistakes, Guesses, UserId, PuzzleId, CreatedAt, UpdatedAt)
                         OUTPUT INSERTED.ID
-                        Values (@CompletionTimeSeconds, @Tries, @IsSolved, @EarnedPoints, @Mistakes, @Guesses, @UserId, @PuzzleId, GETDATE(), GETDATE())";
+                        VALUES (@CompletionTimeSeconds, @Tries, @IsSolved, @EarnedPoints, @Mistakes, @Guesses, @UserId, @PuzzleId, GETDATE(), GETDATE())";
 
                     DbUtils.AddParameter(cmd, "@Id", puzzleAttempt.Id);
                     DbUtils.AddParameter(cmd, "@CompletionTimeSeconds", puzzleAttempt.CompletionTimeSeconds);

@@ -2,6 +2,7 @@ import { userManager } from "./user-profile-manager";
 import { puzzleManager } from "./puzzle-manager";
 import { puzzleAttemptManager } from "./puzzle-attempt-manager";
 import { achievementManager } from "./achievement-manager";
+import { leaderboardManager } from "./leaderboard-manager";
 
 export type ApiError = {
   error: string;
@@ -12,6 +13,7 @@ export const api = {
   puzzle: puzzleManager,
   puzzleAttempt: puzzleAttemptManager,
   achievements: achievementManager,
+  leaderboard: leaderboardManager,
 };
 
 const defaultPostHeaders = { "Content-Type": "application/json" };

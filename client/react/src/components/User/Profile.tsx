@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { api } from "../../managers/api";
 import { type User } from "../../managers/user-profile-manager";
 import { type Achievement } from "../../managers/achievement-manager";
+import { type LeaderboardEntry } from "../../managers/leaderboard-manager";
 import shortenEthereumAddress from "../../helpers/eth-utils";
 import LayoutTile from "../UI/Layouts/LayoutTile";
 import Popover from "../UI/Popover";
@@ -33,7 +34,10 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<Partial<User> | null>(null);
   const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [tabs, setTabs] =
+  const [leaderboard, setLeaderboard] =
+    useState<Partial<LeaderboardEntry | null>>(null);
+
+  const [tabs, _] =
     useState<{ title: string; selected: boolean }[]>(profileTabs);
 
   const { username } = useParams();
@@ -48,11 +52,15 @@ export default function Profile() {
     const achievements = await api.achievements.getUserAchievementByUsername(
       username ?? ""
     );
+    const leaderboardEntry = await api.leaderboard.getEntryByUserId(user.id);
     const achievementsByRecentDate = achievements?.sort(
       (a, b) => new Date(b.earnedAt).getTime() - new Date(a.earnedAt).getTime()
     );
+
     setProfile(user);
     setAchievements(achievementsByRecentDate ?? []);
+    setLeaderboard(leaderboardEntry);
+
     setIsLoading(false);
   };
 
@@ -121,7 +129,7 @@ export default function Profile() {
                         {import.meta.env.VITE_ERC20_TOKEN_SYMBOL} Points
                       </div>
                       <div className="text-neutral-22 text-sm font-bold">
-                        409
+                        {leaderboard?.totalPoints ?? 0}
                       </div>
                     </div>
                   </div>
@@ -168,7 +176,7 @@ export default function Profile() {
                   <div className="pt-6 grid gap-8">
                     <section className="grid gap-5 p-6 bg-almostblack border border-zinc-700 rounded-lg">
                       <div className="flex items-center justify-between">
-                        <h2 className="text-2xl text-neutral-22">
+                        <h2 className="text-2xl tracking-tight text-neutral-22">
                           Achievements
                         </h2>
                         <span className="text-neutral-22 text-sm">
