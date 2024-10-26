@@ -49,6 +49,18 @@ export const LeaderboardIconOne = ({ color, size }: IconProps) => (
   </svg>
 );
 
+export const LeaderboardIconTwo = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M6 21H3a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1zm7 0h-3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1zm7 0h-3a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1z" />
+  </svg>
+);
+
 export const GearIconOne = ({ color, size }: IconProps) => (
   <svg
     width={size}
@@ -76,6 +88,22 @@ export const HelpIconOne = ({ color, size }: IconProps) => (
     <circle cx="12" cy="12" r="10" />
     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
     <line x1="12" x2="12.01" y1="17" y2="17" />
+  </svg>
+);
+
+export const HelpIconTwo = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M3 16.5V5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v11.5h-8.7a.8.8 0 0 0-.8.8c0 1.767-1.457 3.2-3.225 3.2C4.48 20.5 3 19.045 3 17.25v-.75ZM7 6.25a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5H7ZM6.25 12a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1-.75-.75Zm16.627 6.99A4.002 4.002 0 0 1 19 22H7a4.002 4.002 0 0 0 3.877-3.01c.136-.535.57-.99 1.123-.99h10c.552 0 1.013.455.877.99Z"
+      fill={color ?? "currentColor"}
+    ></path>
   </svg>
 );
 
@@ -185,6 +213,25 @@ export const AnalyticsIconOne = ({ color, size }: IconProps): JSX.Element => (
         />
       </clipPath>
     </defs>
+  </svg>
+);
+
+export const AnalyticsIconTwo = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+    id="Layer_1_1_"
+    enableBackground="new 0 0 16 16"
+    version="1.1"
+    viewBox="0 0 16 16"
+    xmlSpace="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <path d="M8,16c4.079,0,7.438-3.055,7.931-7H7.778l-5.027,5.027C4.156,15.253,5.989,16,8,16z" />
+    <path d="M8,0v8h8C16,3.582,12.418,0,8,0z" />
+    <path d="M0,8c0,2.047,0.775,3.909,2.04,5.324L7,8.364V8V0.069C3.055,0.562,0,3.921,0,8z" />
   </svg>
 );
 
@@ -439,6 +486,42 @@ export const CopyTextIcon = ({ color, size }: IconProps): JSX.Element => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M12.643 6.5H8V6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-.5v-4.643A4.857 4.857 0 0 0 12.643 6.5ZM12 22H6a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+export const GameControllerIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+  >
+    <path
+      d="M18.083 11.5a.833.833 0 1 1-1.666 0 .833.833 0 0 1 1.666 0Z"
+      fill="currentColor"
+    ></path>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M2.411 8.297A4 4 0 0 1 6.35 5h1.237a1 1 0 0 1 .707.293l.914.914a1 1 0 0 0 .707.293h4.172a1 1 0 0 0 .707-.293l.914-.914A1 1 0 0 1 16.414 5h1.237a4 4 0 0 1 3.938 3.297l1.071 6A4 4 0 0 1 18.722 19h-.492a3.62 3.62 0 0 1-3.48-2.625l-.043-.15a1 1 0 0 0-.961-.725h-3.492a1 1 0 0 0-.961.725l-.043.15A3.62 3.62 0 0 1 5.77 19h-.492a4 4 0 0 1-3.938-4.703l1.071-6ZM6.75 9a.75.75 0 0 0-.75.75v1H5a.75.75 0 0 0 0 1.5h1v1a.75.75 0 0 0 1.5 0v-1h1a.75.75 0 0 0 0-1.5h-1v-1A.75.75 0 0 0 6.75 9Zm13 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+export const ThreeDots = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M3 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm9 2a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"
       fill="currentColor"
     ></path>
   </svg>

@@ -42,6 +42,8 @@ export default function GameContextBoard() {
   const handleGuessSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
+    if (contextCurrentGuess.length === 0) return;
+
     if (!isGuessValid) {
       toastError("Invalid entry.", true);
       setContextCurrentGuess("");
@@ -130,7 +132,7 @@ export default function GameContextBoard() {
                       isGuessValid ? "border-neutral-22" : "border-error-1"
                     } flex w-full overflow-hidden rounded-lg border-2`}
                   >
-                    <div className="my-auto bg-neutral-12 border-none w-12 h-14 py-1.5 text-center text-[1.125rem] leading-7">
+                    <div className="my-auto bg-sleek-tertiary border-none w-12 h-14 py-1.5 text-center text-[1.125rem] leading-7">
                       <span className="align-[-0.7em] inline-block">
                         <SvgProjectLogo size={24} />
                       </span>
@@ -142,7 +144,7 @@ export default function GameContextBoard() {
                       id="context-guess-entry"
                       type="text"
                       placeholder="type a word"
-                      className="bg-neutral-12 block w-full text-md pt-2 pb-2 pr-2 text-white outline-none"
+                      className="bg-sleek-tertiary block w-full text-md pt-2 pb-2 pr-2 text-white outline-none"
                       value={contextCurrentGuess}
                       onChange={onGuessChange}
                     />
@@ -164,7 +166,7 @@ export default function GameContextBoard() {
                   >
                     <div
                       id="outer"
-                      className="bg-neutral-20 h-full w-full absolute"
+                      className="bg-sleek-secondary h-full w-full absolute"
                     >
                       {contextCurrentGuessObj.animate ? (
                         <motion.div
@@ -241,7 +243,7 @@ export default function GameContextBoard() {
                     >
                       <div
                         id="outer"
-                        className="bg-neutral-20 h-full w-full absolute"
+                        className="bg-sleek-secondary h-full w-full absolute"
                       >
                         <div
                           id="inner"

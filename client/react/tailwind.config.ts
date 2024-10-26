@@ -69,6 +69,14 @@ export default {
           2: "#FFFAEB",
           3: "#FEC84B",
         },
+        sleek: {
+          primary: "#13161b",
+          secondary: "#1c1f25",
+          tertiary: "#282c34",
+          neutral: "#8e97a8",
+          neutral2: "#1c1f25",
+          dark: "#0d0e12",
+        },
         game: {
           list: {
             1: "#bbf7d0",

@@ -13,9 +13,14 @@ import Navbar from "./UI/Navbar";
 import Hero from "./UI/Hero";
 import Login from "./User/Login";
 import Register from "./User/Register";
-import GameContainer from "./Game/GameContainer";
 import Settings from "./User/Settings";
 import Profile from "./User/Profile";
+import LayoutSecond from "./UI/Layouts/LayoutSecond";
+import Banner from "./UI/Banner";
+import SidebarSleek from "./UI/SidebarSleek";
+import NavbarSleek from "./UI/NavbarSleek";
+import GameContainerNew from "./Game/GameContainerNew";
+import LayoutContentFlex from "./UI/Layouts/LayoutContentFlex";
 
 export default function ApplicationViews() {
   return (
@@ -33,28 +38,12 @@ export default function ApplicationViews() {
         }
       >
         <Route path="/" element={<Hero />} />
-        <Route
-          path={ROUTE_PLAY}
-          element={
-            <Authorized>
-              <GameContainer />
-            </Authorized>
-          }
-        />
         <Route path={ROUTE_LEADERBOARD} element={<span>Leaderboard</span>} />
         <Route
           path={ROUTE_SETTINGS}
           element={
             <Authorized>
               <Settings />
-            </Authorized>
-          }
-        />
-        <Route
-          path={ROUTE_PROFILE_EXACT}
-          element={
-            <Authorized>
-              <Profile />
             </Authorized>
           }
         />
@@ -66,6 +55,24 @@ export default function ApplicationViews() {
 
       <Route path={ROUTE_LOGIN} element={<Login />} />
       <Route path={ROUTE_REGISTER} element={<Register />} />
+
+      <Route
+        element={
+          <Authorized>
+            <LayoutSecond>
+              <Banner />
+              <SidebarSleek />
+              <LayoutContentFlex>
+                <NavbarSleek />
+                <Outlet />
+              </LayoutContentFlex>
+            </LayoutSecond>
+          </Authorized>
+        }
+      >
+        <Route path={ROUTE_PLAY} element={<GameContainerNew />} />
+        <Route path={ROUTE_PROFILE_EXACT} element={<Profile />} />
+      </Route>
     </Routes>
   );
 }
