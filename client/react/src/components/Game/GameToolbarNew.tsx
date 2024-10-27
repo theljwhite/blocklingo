@@ -6,7 +6,6 @@ import { useAccount } from "wagmi";
 import useRewards from "../../game/hooks/useRewards";
 import { useRewardsStore } from "../../game/store/rewards-store";
 import { UserTypeValue } from "../../managers/user-profile-manager";
-import LightModeSwitch from "../UI/LightModeSwitch";
 import { LoadingSpinner } from "../UI/Spinners";
 import {
   ShuffleIcon,
@@ -27,9 +26,7 @@ export default function GameToolbarNew() {
     puzzleDetails,
     step,
     isSoundOn,
-    isLightMode,
     isAdminMode,
-    setIsLightMode,
     setIsAdminMode,
     resetStep,
   } = useGameStore((state) => state);
@@ -51,7 +48,7 @@ export default function GameToolbarNew() {
       <div className="mx-auto max-w-screen-xl">
         <div className="grow shrink m-3 flex flex-nowrap justify-between">
           <header className="w-full block">
-            <section className="relative flex gap-20 flex-row items-center justify-center h-6">
+            <section className="relative flex gap-20 flex-row items-center justify-start h-6">
               <div className="flex flex-row items-center h-full text-neutral-22">
                 <span className="text-neutral-22 border-none h-full flex-row gap-2 text-sm flex px-2.5 items-center text-lg">
                   <NetworkIcon size={20} />
@@ -85,6 +82,7 @@ export default function GameToolbarNew() {
                   </span>
                 )}
               </div>
+
               <div className="flex flex-row items-center h-full text-neutral-22">
                 {isUserAdmin && (
                   <button
@@ -104,22 +102,13 @@ export default function GameToolbarNew() {
                     <ResetIcon size={24} />
                   </button>
                 )}
-                <button
-                  onClick={() => console.log("TODO")}
-                  className="border-none h-full flex px-2.5 text-neutral-22  items-center text-lg"
-                >
+                <button className="border-none h-full flex px-2.5 text-neutral-22  items-center text-lg">
                   <ShuffleIcon size={24} />
                 </button>
-                <button
-                  onClick={() => console.log("TODO")}
-                  className="border-none h-full flex px-2.5 text-neutral-22 items-center text-lg"
-                >
+                <button className="border-none h-full flex px-2.5 text-neutral-22 items-center text-lg">
                   <BrainIcon size={24} />
                 </button>
-                <button
-                  onClick={() => console.log("TODO")}
-                  className="border-none h-full flex px-2.5 text-neutral-22  items-center text-lg"
-                >
+                <button className="border-none h-full flex px-2.5 text-neutral-22  items-center text-lg">
                   <LightbulbIcon size={24} />
                 </button>
                 <button
@@ -128,15 +117,7 @@ export default function GameToolbarNew() {
                 >
                   <SoundIcon muted={!isSoundOn} size={24} />
                 </button>
-                <button
-                  onClick={() => console.log("TODO")}
-                  className="border-none flex items-center justify-center h-full flex px-2.5 text-neutral-22 items-center text-lg"
-                >
-                  {/* <LightModeSwitch
-                    checked={isLightMode}
-                    onChange={() => setIsLightMode(!isLightMode)}
-                  /> */}
-                </button>
+                <button className="border-none flex items-center justify-center h-full flex px-2.5 text-neutral-22 items-center text-lg"></button>
               </div>
             </section>
           </header>

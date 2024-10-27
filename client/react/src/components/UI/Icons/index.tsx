@@ -99,8 +99,8 @@ export const HelpIconTwo = ({ color, size }: IconProps): JSX.Element => (
     fill={color ?? "currentColor"}
   >
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M3 16.5V5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v11.5h-8.7a.8.8 0 0 0-.8.8c0 1.767-1.457 3.2-3.225 3.2C4.48 20.5 3 19.045 3 17.25v-.75ZM7 6.25a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5H7ZM6.25 12a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1-.75-.75Zm16.627 6.99A4.002 4.002 0 0 1 19 22H7a4.002 4.002 0 0 0 3.877-3.01c.136-.535.57-.99 1.123-.99h10c.552 0 1.013.455.877.99Z"
       fill={color ?? "currentColor"}
     ></path>
@@ -188,6 +188,26 @@ export const EthCircleIcon = ({ size }: { size: string }): JSX.Element => (
   </svg>
 );
 
+export const EthCircleColorIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+    enableBackground="new 0 0 226.777 226.777"
+    id="Layer_1"
+    version="1.1"
+    viewBox="0 0 226.777 226.777"
+    xmlSpace="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <path
+      d="M113.313,0C50.732,0,0,50.732,0,113.313s50.732,113.313,113.313,113.313s113.313-50.732,113.313-113.313  S175.894,0,113.313,0z M111.844,188.386l-44.78-63.344l44.78,26.218V188.386z M111.844,141.976l-45.083-26.408l45.083-19.748  V141.976z M111.844,92.647l-43.631,19.11l43.631-73.306V92.647z M114.75,38.429l44.244,73.6L114.75,92.647V38.429z M114.75,188.386  V151.26l44.78-26.218L114.75,188.386z M114.75,141.977V95.821l45.116,19.762L114.75,141.977z"
+      fill={color ?? "currentColor"}
+    />
+  </svg>
+);
+
 export const AnalyticsIconOne = ({ color, size }: IconProps): JSX.Element => (
   <svg
     width={size}
@@ -270,6 +290,18 @@ export const UserIcon = ({ color, size }: IconProps): JSX.Element => (
       d="M2 22C2 16.4772 6.47715 12 12 12C17.5228 12 22 16.4772 22 22V23H2V22ZM4.06189 21H19.9381C19.446 17.0537 16.0796 14 12 14C7.92038 14 4.55399 17.0537 4.06189 21Z"
       fill={color ?? "currentColor"}
     />
+  </svg>
+);
+
+export const UserCircleIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c39.77 0 72 32.24 72 72S295.8 272 256 272c-39.76 0-72-32.24-72-72S216.2 128 256 128zM256 448c-52.93 0-100.9-21.53-135.7-56.29C136.5 349.9 176.5 320 224 320h64c47.54 0 87.54 29.88 103.7 71.71C356.9 426.5 308.9 448 256 448z" />
   </svg>
 );
 
@@ -524,5 +556,56 @@ export const ThreeDots = ({ color, size }: IconProps): JSX.Element => (
       d="M3 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm9 2a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"
       fill="currentColor"
     ></path>
+  </svg>
+);
+
+export const GovernanceIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill={color ?? "currentColor"}
+  >
+    <path
+      d="M3.033 8.75h17.934c1.02 0 1.42-1.351.572-1.93l-8.395-5.716a2.026 2.026 0 0 0-2.288 0L2.461 6.82c-.849.578-.448 1.929.572 1.929ZM5.5 10.25h3v5h-3v-5ZM18.5 10.25h-3v5h3v-5ZM10.5 10.25h3v5h-3v-5ZM20.276 17.303a1 1 0 0 0-.894-.553H4.618a1 1 0 0 0-.894.553l-1 2a1 1 0 0 0 .894 1.447h16.764a1 1 0 0 0 .894-1.447l-1-2Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+export const HomeIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    fill={color ?? "currentColor"}
+    viewBox="0 0 24 24"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M21 10.15v7.817C21 20.194 19.21 22 17 22H7c-2.21 0-4-1.806-4-4.033V10.15c0-1.21.54-2.357 1.47-3.123l5-4.118a3.975 3.975 0 0 1 5.06 0l5 4.118A4.046 4.046 0 0 1 21 10.15Zm-5.75 7.1v2.25a1 1 0 0 1-1 1h-4.5a1 1 0 0 1-1-1v-2.25a3.25 3.25 0 0 1 6.5 0Z"
+      fill={color ?? "currentColor"}
+    ></path>
+  </svg>
+);
+
+export const SmartContractIcon = ({ color, size }: IconProps): JSX.Element => (
+  <svg
+    width={size}
+    height={size}
+    fill="none"
+    viewBox="0 0 15 15"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M6.7964 11.8996L6.79897 11.9002C6.7972 11.8999 6.79638 11.8996 6.7964 11.8996Z"
+      fill={color ?? "currentColor"}
+    />
+    <path
+      clip-rule="evenodd"
+      d="M1 1.5C1 0.671573 1.67157 0 2.5 0H10.7071L14 3.29289V13.5C14 14.3284 13.3284 15 12.5 15H2.5C1.67157 15 1 14.3284 1 13.5V1.5ZM7 4H4V5H7V4ZM11 7H4V8H11V7ZM6.3047 10.9078C5.90085 11.0163 5.58546 11.3247 5.47432 11.6581L4.52563 11.3419C4.74783 10.6753 5.33244 10.1336 6.04525 9.94209C6.75237 9.75212 7.55858 9.91125 8.25663 10.5534C8.46631 10.4917 8.67406 10.457 8.87948 10.446C9.41817 10.4171 9.90228 10.553 10.3173 10.7259C10.6221 10.8529 10.9176 11.0135 11.1661 11.1485C11.2454 11.1916 11.3201 11.2322 11.3886 11.2682C11.7119 11.4379 11.8898 11.5 12 11.5V12.5C11.6101 12.5 11.2255 12.312 10.9238 12.1536C10.8307 12.1047 10.7406 12.0558 10.6517 12.0075C10.4144 11.8786 10.1856 11.7544 9.93267 11.649C9.59767 11.5094 9.26929 11.4265 8.93298 11.4446C8.88409 11.4472 8.83418 11.452 8.78324 11.4593L8.78443 11.4726C8.81115 11.7974 8.67709 12.0645 8.50444 12.2563C8.18586 12.6103 7.66686 12.796 7.27692 12.8669C7.07379 12.9038 6.8553 12.9193 6.66293 12.8912C6.56876 12.8774 6.44734 12.8485 6.33295 12.7804C6.21132 12.708 6.06717 12.5695 6.03022 12.3478C5.99585 12.1416 6.07346 11.9716 6.14128 11.8671C6.21124 11.7593 6.30544 11.6661 6.40277 11.5856C6.59219 11.4287 6.86814 11.2591 7.23685 11.0726L7.26373 11.0531C6.91545 10.8496 6.58098 10.8336 6.3047 10.9078Z"
+      fill={color ?? "currentColor"}
+      fill-rule="evenodd"
+    />
   </svg>
 );
