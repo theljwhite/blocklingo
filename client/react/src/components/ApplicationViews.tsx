@@ -19,7 +19,7 @@ import LayoutSecond from "./UI/Layouts/LayoutSecond";
 import Banner from "./UI/Banner";
 import SidebarSleek from "./UI/SidebarSleek";
 import NavbarSleek from "./UI/NavbarSleek";
-import GameContainerNew from "./Game/GameContainerNew";
+import GameContainerNew from "./Game/GameContainer";
 import LayoutContentFlex from "./UI/Layouts/LayoutContentFlex";
 
 export default function ApplicationViews() {

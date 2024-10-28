@@ -24,10 +24,6 @@ import {
   SmartContractIcon,
 } from "./Icons";
 
-type SidebarGroup = {
-  sectionName: string;
-  items: SidebarListItem[];
-};
 
 type SidebarListItem = {
   title: string;

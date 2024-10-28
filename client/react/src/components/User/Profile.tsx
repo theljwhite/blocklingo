@@ -157,15 +157,15 @@ export default function Profile() {
                     <div
                       key={index}
                       className={`${
-                        tab.selected
-                          ? "border-b-2 border-primary-1"
-                          : "border-none"
-                      } mr-2 px-4 py-2 text-neutral-22 items-center cursor-pointer flex text-sm relative outline-none`}
+                        tab.selected ? "text-neutral-22" : "text-sleek-neutral"
+                      } mr-2 px-4 py-2 items-center cursor-pointer flex text-sm relative outline-none`}
                     >
                       <div className="flex cursor-pointer">{tab.title}</div>
                     </div>
                   );
                 })}
+                {/* TODO: dynamic update of this bar */}
+                <div className="absolute bottom-0 left-2 w-28 h-0.5 bg-primary-1" />
               </div>
             </div>
           </div>
