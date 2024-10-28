@@ -65,35 +65,6 @@ export default function GameContextBoard() {
     } else setIsGuessValid(true);
   };
 
-  // const handleGuessScoreBar = (
-  //   score: number
-  // ): {
-  //   width: number;
-  //   bgClass: string;
-  // } => {
-  //   let bgClass = "bg-primary-5";
-  //   const scaledScore = Math.log10(score + 1);
-  //   const maxScaledScore = Math.log10(CONTEXT_WORST_SIMILARITY_SCORE + 1);
-  //   let widthPercentage = (1 - scaledScore / maxScaledScore) * 100;
-
-  //   if (score <= 1) widthPercentage = 100;
-  //   if (score < 1000) {
-  //     bgClass = "bg-success-1";
-  //   } else if (score < 4000) {
-  //     bgClass = "bg-orange-600";
-  //   } else if (score > 10_000) {
-  //     widthPercentage = 1;
-  //     bgClass = "bg-primary-5";
-  //   }
-
-  //   const clampedWidth = Math.min(100, Math.max(1, widthPercentage));
-
-  //   return {
-  //     width: clampedWidth,
-  //     bgClass,
-  //   };
-  // };
-
   const handleGuessScoreBar = (
     score: number
   ): {
